@@ -24,12 +24,25 @@ koaEjs(app, {
 
 //Route mapping 
 router.get('/', index);
+router.get('/char', showChar);
+router.get('/reward', showReward);
 
 //Router functions
+	//Show Index.html
 async function index(ctx){
     await ctx.render('index', {
         title: 'All my Tasks:'
     });
+};
+
+	//Show Char.html
+async function showChar(ctx){
+    await ctx.render('char');
+};	
+	
+	//Show Reward.html
+async function  showReward(ctx){
+    await ctx.render('reward');
 };
 
 //for testing purposes
