@@ -4,6 +4,21 @@ const json = require('koa-json');
 const koaRouter = require('koa-router');
 const koaEjs = require('koa-ejs');
 const path = require('path');
+const fs = require('fs');
+
+//Reading a file
+let rawdata = fs.readFileSync('test.json');
+let subject = JSON.parse(rawdata);
+console.log(subject);
+
+//Appending to a JSON file
+/*
+anchors = [ {  "title":"  2.0 Wireless " }  ];
+
+subject.push(...anchors);
+
+fs.writeFile("test.json", JSON.stringify(subject));
+*/
 
 //initialize app as instance of koa 
 const app = new koa();
@@ -24,6 +39,8 @@ koaEjs(app, {
 
 //Route mapping 
 router.get('/', index);
+router.post('/', index);
+
 router.get('/char', showChar);
 router.get('/reward', showReward);
 
