@@ -11,14 +11,14 @@ let rawdata = fs.readFileSync('test.json');
 let subject = JSON.parse(rawdata);
 console.log(subject);
 
-//Appending to a JSON file
+//Appending to a JSON file 
+    //*Keeps appending so commented out*
 /*
-anchors = [ {  "title":"  2.0 Wireless " }  ];
-
-subject.push(...anchors);
-
-fs.writeFile("test.json", JSON.stringify(subject));
+subject.tasks.push({name:"migos", age:70});
+let newSubject = JSON.stringify(subject);
+fs.writeFileSync('test.json', newSubject);
 */
+
 
 //initialize app as instance of koa 
 const app = new koa();
