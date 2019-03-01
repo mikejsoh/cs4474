@@ -5,6 +5,7 @@ const koaRouter = require('koa-router');
 const koaEjs = require('koa-ejs');
 const path = require('path');
 const fs = require('fs');
+const bodyParser = require('koa-bodyparser');
 
 //Reading a file
 let rawdata = fs.readFileSync('test.json');
@@ -27,6 +28,8 @@ const router = new koaRouter();
 
 //Pretty print JSON middleware
 app.use(json());
+//BodyParser Middleware
+app.use(bodyParser());
 
 //Ejs templating options, injects views into layout.html
 koaEjs(app, {
@@ -39,7 +42,7 @@ koaEjs(app, {
 
 //Route mapping 
 router.get('/', index);
-router.post('/', index);
+router.post('/', addTask);
 
 router.get('/char', showChar);
 router.get('/reward', showReward);
@@ -50,6 +53,13 @@ async function index(ctx){
     await ctx.render('index', {
         title: 'All my Tasks:'
     });
+};
+
+    //Add Task
+async function addTask(ctx) {
+    const body = ctx.request.body;
+    console.log(body.taskName);
+    ctx.redirect('/'); 
 };
 
 	//Show Char.html
