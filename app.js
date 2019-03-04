@@ -68,7 +68,7 @@ async function showChar(ctx){
 };	
 	
 	//Show Reward.html
-async function  showReward(ctx){
+async function showReward(ctx){
     await ctx.render('reward');
 };
 
