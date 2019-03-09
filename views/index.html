@@ -1,5 +1,6 @@
 <h1><%- title %></h1>
 <h4>Adding a task</h4>
+
 <form action="/" method="POST">
     <div class="form-group">
         <input type="text" name="taskName" class="form-control form-control-lg" placeholder="Add fields">
@@ -7,6 +8,7 @@
     <input type="submit" value="Add Task" class="btn btn-dark btn-lg">
     <a href="/" class="btn btn-danger btn-lg">Cancel</a>
 </form>
+
     
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Launch demo modal
@@ -26,7 +28,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="defaultForm-email" class="form-control validate">
+          <input type="email" name="email" id="defaultForm-email" class="form-control validate">
           <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
         </div>
 
@@ -40,6 +42,7 @@
       <div class="modal-footer d-flex justify-content-center">
         <button class="btn btn-default">Login</button>
       </div>
-    </div>
+      </div>
+      <p class="text-center"><%- addTaskStatus %></p>
   </div>
 </div>

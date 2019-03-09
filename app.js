@@ -51,7 +51,8 @@ router.get('/reward', showReward);
 	//Show Index.html
 async function index(ctx){
     await ctx.render('index', {
-        title: 'All my Tasks:'
+        title: 'All my Tasks:',
+        addTaskStatus: ' '
     });
 };
 
@@ -59,7 +60,13 @@ async function index(ctx){
 async function addTask(ctx) {
     const body = ctx.request.body;
     console.log(body.taskName);
-    ctx.redirect('/'); 
+    var postTaskName = body.taskName;
+    if (postTaskName = "a") {
+        await ctx.render('index', {
+            title: 'All my Tasks:',
+            addTaskStatus: 'Ladies and Gentlemen, we got him'
+        });
+    }
 };
 
 	//Show Char.html
