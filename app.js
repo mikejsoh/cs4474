@@ -86,4 +86,4 @@ router.get('/test', ctx => (ctx.body = 'Hello World'));
 app.use(router.routes()).use(router.allowedMethods());
 
 //make the app listen to port 3000 and log message 
-app.listen(3000, () => console.log('Server Started ...'));
+app.listen(3001, () => console.log('Server Started ...'));
