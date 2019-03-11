@@ -31,6 +31,7 @@ app.use(json());
 //BodyParser Middleware
 app.use(bodyParser());
 
+
 //Ejs templating options, injects views into layout.html
 koaEjs(app, {
     root: path.join(__dirname, 'views'),
@@ -86,4 +87,4 @@ router.get('/test', ctx => (ctx.body = 'Hello World'));
 app.use(router.routes()).use(router.allowedMethods());
 
 //make the app listen to port 3000 and log message 
-app.listen(3001, () => console.log('Server Started ...'));
+app.listen(3005, () => console.log('Server Started ...'));
