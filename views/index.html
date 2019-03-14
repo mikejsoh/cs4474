@@ -15,7 +15,16 @@
 </button>
 
 <!-- Modal -->
+<% if (user === ' ') { %>
+   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<% } %>
+    
+<% if (user === 'true') { %>
+   <div class="modal fade in" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<% } %>
+<!--
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+-->
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -46,3 +55,6 @@
       <p class="text-center"><%- addTaskStatus %></p>
   </div>
 </div>
+<% if (user === 'true') { %>
+   <script src="activateModal.js"></script>
+<% } %>
