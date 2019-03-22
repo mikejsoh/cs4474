@@ -1,0 +1,26 @@
+{
+  "name": "cs4474",
+  "version": "1.0.0",
+  "description": "In order to run: 1. Install node and npm on machine  2. \"npm install\" from root directory that has package.json 3. \"npm start\" to start server that automatically refreshes on changes  4. Open browser and go to localhost:3000",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikejsoh/cs4474.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikejsoh/cs4474/issues"
+  },
+  "homepage": "https://github.com/mikejsoh/cs4474#readme",
+  "dependencies": {
+    "koa": "^2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
