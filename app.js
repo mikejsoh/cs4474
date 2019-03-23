@@ -50,9 +50,10 @@ router.get('/reward', showReward);
 //Router functions
 	//Show Index.html
 async function index(ctx){
-    await ctx.render('index', {
+    await ctx.render('index2', {
         title: 'All my Tasks:',
-        addTaskStatus: ' '
+        addTaskStatus: ' ',
+        tasks: subject.tasks
     });
 };
 
