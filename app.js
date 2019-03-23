@@ -40,12 +40,16 @@ koaEjs(app, {
     debug: false
 });
 
+
+
 //Route mapping 
 router.get('/', index);
 router.post('/', addTask);
 
 router.get('/char', showChar);
 router.get('/reward', showReward);
+
+router.get('/reset', reset);
 
 //Router functions
 	//Show Index.html
@@ -80,6 +84,21 @@ async function showChar(ctx){
 async function showReward(ctx){
     await ctx.render('reward');
 };
+
+    //Reset tasks functionality
+async function reset(ctx) {
+    
+    //Just re-render index
+    await ctx.render('index', {
+        title: 'All my Tasks:',
+        addTaskStatus: ' ',
+        user: ' '
+    });
+    
+    //Reset all Tasks and Rewards
+    fs.writeFileSync('test.json', JSON.stringify({"tasks":[{"name":"Test","age":90}],"rewards":[]}, null, 4));
+};
+
 
 //for testing purposes
 router.get('/test', ctx => (ctx.body = 'Hello World'));

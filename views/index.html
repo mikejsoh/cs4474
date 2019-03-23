@@ -16,17 +16,14 @@
 
 <!-- Modal -->
 <% if (user === ' ') { %>
-   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="exampleModal" role="dialog">
 <% } %>
     
 <% if (user === 'true') { %>
-   <div class="modal fade in" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal show" id="exampleModal" role="dialog">
 <% } %>
-<!--
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
--->
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
+
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center">
         <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
@@ -58,3 +55,27 @@
 <% if (user === 'true') { %>
    <script src="activateModal.js"></script>
 <% } %>
+
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#resetModal">Reset Tasks and Rewards</button>
+
+<!-- Modal -->
+<div id="resetModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <h4 class="modal-title">Warning</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to reset all tasks and rewards? This action cannot be reversed.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a href="/reset" class="btn btn-danger btn-lg">Reset</a>
+      </div>
+    </div>
+
+  </div>
+</div>
