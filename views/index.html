@@ -1,3 +1,9 @@
+<script type="text/javascript">
+    jQuery(window).on('load',function() {
+        jQuery('#userCreationModal').modal('show');
+    });
+</script>
+
 <h1><%- title %></h1>
 <h4>Adding a task</h4>
 
@@ -15,14 +21,40 @@
 </button>
 
 <!-- Modal -->
-<% if (user === ' ') { %>
-<div class="modal fade" id="exampleModal" role="dialog">
-<% } %>
+
     
-<% if (user === 'true') { %>
-<div class="modal show" id="exampleModal" role="dialog">
+<% if (userCreated === false) { %>
+
+<!-- User Creation Modal -->
+<div id="userCreationModal" class="modal show" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <h4 class="modal-title">Welcome</h4>
+      </div>
+      <div class="modal-body">
+        <p>Please type your name</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a href="/reset" class="btn btn-danger btn-lg">Reset</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
 <% } %>
 
+<!-- Example
+<% if (userCreated === 'true') { %>
+   <script src="activateModal.js"></script>
+<% } %>
+-->
+<div id="exampleModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -52,13 +84,11 @@
       <p class="text-center"><%- addTaskStatus %></p>
   </div>
 </div>
-<% if (user === 'true') { %>
-   <script src="activateModal.js"></script>
-<% } %>
+
 
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#resetModal">Reset Tasks and Rewards</button>
 
-<!-- Modal -->
+<!-- Reset Modal -->
 <div id="resetModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -73,7 +103,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <a href="/reset" class="btn btn-danger btn-lg">Reset</a>
+        <a href="/resetNormal" class="btn btn-danger btn-lg">Reset</a>
       </div>
     </div>
 

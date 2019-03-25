@@ -40,7 +40,31 @@ koaEjs(app, {
     debug: false
 });
 
+//Functions
+    //Checking Date validity
+function isValidDate(inputDate) {
 
+    var date = new Date();
+    date.setFullYear(year, month - 1, day);
+    // month - 1 since the month index is 0-based (0 = January)
+
+    if ( (date.getFullYear() == year) && (date.getMonth() == month + 1) && (date.getDate() == day) )
+    return true;
+
+    return false;
+}
+
+    //Checking if Date is past current date
+function pastDueDate(inputDate) {
+
+    var now = new Date();
+    
+    //Date is in the future
+    if (inputDate < now) {
+        return false;
+    }
+    return false;
+}
 
 //Route mapping 
 router.get('/', index);
@@ -51,13 +75,21 @@ router.get('/reward', showReward);
 
 router.get('/reset', reset);
 
+//---------------------------------------------------
 //Router functions
 	//Show Index.html
 async function index(ctx){
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+    var charCreated = true;
+    if (subject.Character === undefined || subject.Character.length == 0) {
+        charCreated = false;
+    }
+    
     await ctx.render('index', {
         title: 'All my Tasks:',
         addTaskStatus: ' ',
-        user: ' '
+        userCreated: charCreated
     });
 };
 
@@ -66,6 +98,9 @@ async function addTask(ctx) {
     const body = ctx.request.body;
     console.log(body.taskName);
     var postTaskName = body.taskName;
+    
+    
+    
     if (postTaskName = "a") {
         await ctx.render('index', {
             title: 'All my Tasks:',
@@ -85,18 +120,46 @@ async function showReward(ctx){
     await ctx.render('reward');
 };
 
-    //Reset tasks functionality
-async function reset(ctx) {
+    //Reset Everything functionality
+async function resetAll(ctx) {
+    
+    //Reset all Tasks and Rewards
+    fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":[]}, null, 4));
     
     //Just re-render index
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+    var charCreated = true;
+    if (subject.Character === undefined || subject.Character.length == 0) {
+        charCreated = false;
+    }
+    
     await ctx.render('index', {
         title: 'All my Tasks:',
         addTaskStatus: ' ',
-        user: ' '
+        userCreated: charCreated
     });
+};
+
+    //Reset Everything except character
+async function resetNormal(ctx) {
     
     //Reset all Tasks and Rewards
-    fs.writeFileSync('test.json', JSON.stringify({"tasks":[{"name":"Test","age":90}],"rewards":[]}, null, 4));
+    fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":[]}, null, 4));
+    
+    //Just re-render index
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+    var charCreated = true;
+    if (subject.Character === undefined || subject.Character.length == 0) {
+        charCreated = false;
+    }
+    
+    await ctx.render('index', {
+        title: 'All my Tasks:',
+        addTaskStatus: ' ',
+        userCreated: charCreated
+    });
 };
 
 
