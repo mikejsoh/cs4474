@@ -12,6 +12,10 @@ const render = require('koa-ejs');
 const serve = require('koa-static');
 //parses request objects 
 const bodyParser = require('koa-bodyparser');
+//easier date library 
+const moment = require('moment');
+//local task object
+const Task = require('./task');
 
 //intialize objects 
 const app = new Koa();
