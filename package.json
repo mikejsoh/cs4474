@@ -2,7 +2,7 @@
   "name": "cs4474",
   "version": "1.0.0",
   "description": "In order to run: 1. Install node and npm on machine  2. \"npm install\" from root directory that has package.json 3. \"npm start\" to start server that automatically refreshes on changes  4. Open browser and go to localhost:3000",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"
   },
@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/mikejsoh/cs4474#readme",
   "dependencies": {
-    "koa": "^2.7.0"
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-ejs": "^4.2.0",
+    "koa-json": "^2.0.2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
