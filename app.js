@@ -40,6 +40,8 @@ koaEjs(app, {
     debug: false
 });
 
+
+
 //Route mapping 
 router.get('/', index);
 router.post('/', addTask);
@@ -47,12 +49,15 @@ router.post('/', addTask);
 router.get('/char', showChar);
 router.get('/reward', showReward);
 
+router.get('/reset', reset);
+
 //Router functions
 	//Show Index.html
 async function index(ctx){
-    await ctx.render('index2', {
+    await ctx.render('index', {
         title: 'All my Tasks:',
         addTaskStatus: ' ',
+        user: ' ',
         tasks: subject.tasks
     });
 };
@@ -65,7 +70,9 @@ async function addTask(ctx) {
     if (postTaskName = "a") {
         await ctx.render('index', {
             title: 'All my Tasks:',
-            addTaskStatus: 'Ladies and Gentlemen, we got him'
+            addTaskStatus: 'Ladies and Gentlemen, we got him',
+            user: 'true',
+            tasks: subject.tasks
         });
     }
 };
@@ -79,6 +86,22 @@ async function showChar(ctx){
 async function showReward(ctx){
     await ctx.render('reward');
 };
+
+    //Reset tasks functionality
+async function reset(ctx) {
+    
+    //Just re-render index
+    await ctx.render('index', {
+        title: 'All my Tasks:',
+        addTaskStatus: ' ',
+        user: ' ',
+        tasks: subject.tasks
+    });
+    
+    //Reset all Tasks and Rewards
+    fs.writeFileSync('test.json', JSON.stringify({"tasks":[{"name":"Test","age":90}],"rewards":[]}, null, 4));
+};
+
 
 //for testing purposes
 router.get('/test', ctx => (ctx.body = 'Hello World'));

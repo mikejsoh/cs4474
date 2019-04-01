@@ -15,9 +15,15 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<% if (user === ' ') { %>
+<div class="modal fade" id="exampleModal" role="dialog">
+<% } %>
+    
+<% if (user === 'true') { %>
+<div class="modal show" id="exampleModal" role="dialog">
+<% } %>
+
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center">
         <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
@@ -46,3 +52,44 @@
       <p class="text-center"><%- addTaskStatus %></p>
   </div>
 </div>
+<% if (user === 'true') { %>
+   <script src="activateModal.js"></script>
+<% } %>
+
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#resetModal">Reset Tasks and Rewards</button>
+
+<!-- Modal -->
+<div id="resetModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <h4 class="modal-title">Warning</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to reset all tasks and rewards? This action cannot be reversed.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a href="/reset" class="btn btn-danger btn-lg">Reset</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Start of Task List -->
+<ul class="list-group">
+  <% tasks.forEach( function(task) { %>
+    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
+        Task Name: <%= task.name %> 
+        <div class="pull-right action-buttons">
+            <a href="#"><i class="far fa-edit"></i></span></a>
+            <a href="#"><i class="fas fa-trash-alt"></i></span></a>
+        </div>
+    </li>
+    <% }); %>
+</ul>
