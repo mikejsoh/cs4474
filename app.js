@@ -89,7 +89,9 @@ async function index(ctx){
     await ctx.render('index', {
         title: 'All my Tasks:',
         addTaskStatus: ' ',
-        userCreated: charCreated
+        userCreated: charCreated,
+        user: ' ',
+        tasks: subject.tasks
     });
 };
 
@@ -105,14 +107,17 @@ async function addTask(ctx) {
         await ctx.render('index', {
             title: 'All my Tasks:',
             addTaskStatus: 'Ladies and Gentlemen, we got him',
-            user: 'true'
+            user: 'true',
+            tasks: subject.tasks
         });
     }
 };
 
 	//Show Char.html
 async function showChar(ctx){
-    await ctx.render('char');
+    await ctx.render('char', {
+        title: "Character"
+    });
 };	
 	
 	//Show Reward.html
@@ -137,7 +142,9 @@ async function resetAll(ctx) {
     await ctx.render('index', {
         title: 'All my Tasks:',
         addTaskStatus: ' ',
-        userCreated: charCreated
+        userCreated: charCreated,
+        user: ' ',
+        tasks: subject.tasks
     });
 };
 
