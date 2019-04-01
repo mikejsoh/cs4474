@@ -87,16 +87,14 @@ async function index(ctx){
     }
     
     await ctx.render('index', {
-        title: 'All my Tasks:',
-        addTaskStatus: ' ',
+        title: "Tasks",
         userCreated: charCreated,
-        user: ' ',
-        tasks: subject.tasks
+        tasks: subject.IncompleteTasks
     });
 };
 
-    //Add Task
-async function addTask(ctx) {
+/*
+async function fakeaddTask(ctx) {
     const body = ctx.request.body;
     console.log(body.taskName);
     var postTaskName = body.taskName;
@@ -108,11 +106,42 @@ async function addTask(ctx) {
             title: 'All my Tasks:',
             addTaskStatus: 'Ladies and Gentlemen, we got him',
             user: 'true',
-            tasks: subject.tasks
+            tasks: subject.IncompleteTasks
         });
     }
 };
+*/
 
+//Adding Task Form Functionality
+//Task has 6 elements: 
+//0. Task Title     1. Task Description     2. Task EXP
+//3. Reward Title   4. Reward Description   5. Task Due Date
+async function addTask(ctx) {
+    const body = ctx.request.body;
+    var postTaskTitle = body.taskTitle;
+    var postTaskDescription = body.taskDescription;
+    var postTaskEXP = body.taskEXP;
+    var postTaskRewardTitle = body.taskRewardTitle;
+    var postTaskRewardDescription = body.taskRewardDescription;
+    var postTaskDueDate = body.taskDueDate;
+    
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
+//Appending to a JSON file 
+    //*Keeps appending so commented out*
+/*
+    subject.IncompleteTasks.push({"TaskTitle:", age:70});
+let newSubject = JSON.stringify(subject);
+fs.writeFileSync('test.json', newSubject);
+    
+    await ctx.render('index', {
+        title: "Tasks",
+        user: true,
+        tasks: subject.IncompleteTasks
+    });
+*/
+};
 	//Show Char.html
 async function showChar(ctx){
     await ctx.render('char', {
@@ -125,31 +154,8 @@ async function showReward(ctx){
     await ctx.render('reward');
 };
 
-    //Reset Everything functionality
-async function resetAll(ctx) {
-    
-    //Reset all Tasks and Rewards
-    fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":[]}, null, 4));
-    
-    //Just re-render index
-    let rawdata = fs.readFileSync('test.json');
-    let subject = JSON.parse(rawdata);
-    var charCreated = true;
-    if (subject.Character === undefined || subject.Character.length == 0) {
-        charCreated = false;
-    }
-    
-    await ctx.render('index', {
-        title: 'All my Tasks:',
-        addTaskStatus: ' ',
-        userCreated: charCreated,
-        user: ' ',
-        tasks: subject.tasks
-    });
-};
-
     //Reset Everything except character
-async function resetNormal(ctx) {
+async function reset(ctx) {
     
     //Reset all Tasks and Rewards
     fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":[]}, null, 4));
@@ -157,15 +163,12 @@ async function resetNormal(ctx) {
     //Just re-render index
     let rawdata = fs.readFileSync('test.json');
     let subject = JSON.parse(rawdata);
-    var charCreated = true;
-    if (subject.Character === undefined || subject.Character.length == 0) {
-        charCreated = false;
-    }
+    var charCreated = false;
     
     await ctx.render('index', {
-        title: 'All my Tasks:',
-        addTaskStatus: ' ',
-        userCreated: charCreated
+        title: "Tasks",
+        userCreated: charCreated,
+        tasks: subject.IncompleteTasks
     });
 };
 

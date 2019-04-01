@@ -1,8 +1,11 @@
+<!-- If User not created, show User Creation Modal --> 
+<% if (userCreated === false) { %>
 <script type="text/javascript">
     jQuery(window).on('load',function() {
         jQuery('#userCreationModal').modal('show');
     });
 </script>
+<% } %>
 
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -20,25 +23,9 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 
-
+<!-- Replacing text with EJS
 <h1><%- title %></h1>
-<h4>Adding a task</h4>
-
-<form action="/" method="POST">
-  <div class="form-group">
-    <input type="text" name="taskName" class="form-control form-control-lg" placeholder="Add fields">
-  </div>
-  <input type="submit" value="Add Task" class="btn btn-dark btn-lg">
-  <a href="/" class="btn btn-danger btn-lg">Cancel</a>
-</form>
-
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->  
-<% if (userCreated === false) { %>
+-->
 
 <!-- User Creation Modal -->
 <div id="userCreationModal" class="modal show" role="dialog">
@@ -58,11 +45,9 @@
         <a href="/reset" class="btn btn-danger btn-lg">Reset</a>
       </div>
     </div>
-
   </div>
 </div>
     
-<% } %>
 
 <!-- Example
 <% if (userCreated === 'true') { %>
@@ -70,9 +55,9 @@
 <% } %>
 -->
 
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#resetModal">Reset Tasks and
+<!-- Reset Button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#resetModal">Reset Tasks and
     Rewards</button>
-
 
 <!-- Reset Modal -->
 <div id="resetModal" class="modal fade" role="dialog">
@@ -85,11 +70,11 @@
         <h4 class="modal-title">Warning</h4>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to reset all tasks and rewards? This action cannot be reversed.</p>
+        <p>Are you sure you want to reset all tasks, rewards, and character progress? This action cannot be reversed.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <a href="/resetNormal" class="btn btn-danger btn-lg">Reset</a>
+        <a href="/resetNormal" class="btn btn-danger btn-lg">Reset Everything</a>
         </div>
       </div>
     </div>
@@ -106,8 +91,8 @@
       <button type="button" class="btn btn-primary fas fa-plus float-right" data-toggle="modal"
         data-target="#addTaskModal">
       </button>
-
     </div>
+      
     <!-- Add Task Modal-->
     <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel"
       aria-hidden="true">
@@ -119,31 +104,39 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <form>
+          
+            <form action="/" method="POST"> <!-- Start of Form -->
               <div class="form-group">
-                <label for="exampleFormControlTextarea1">Task Description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <label for="TaskTitle">Task Title</label>
+                <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
+              </div>
+              <div class="form-group">
+                <label for="TaskDescription">Task Description</label>
+                <textarea class="form-control" id="TaskDescription" name="taskDescription" rows="3"></textarea>
               </div>
               <div class="form-group">
                 <label for="EXP">EXP</label>
-                <input type="text" class="form-control" id="exp">
+                <input type="text" class="form-control" name="taskEXP" id="exp">
               </div>
               <div class="form-group">
-                <label for="Reward">Reward</label>
-                <input type="text" class="form-control" id="reward">
+                <label for="Reward">Reward Title</label>
+                <input type="text" class="form-control" name="taskRewardTitle" id="reward">
               </div>
               <div class="form-group">
-                <label for="EXP">Due Date</label>
-                <input type="text" class="form-control" id="exp">
+                <label for="RewardDescription">Reward Description</label>
+                <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"></textarea>
               </div>
-            </form>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Save</button>
-          </div>
+              <div class="form-group">
+                <label for="DueDate">Due Date</label>
+                <input type="text" class="form-control" id="TaskDueDate" name="taskDueDate">
+              </div>
+              
+              <div class="modal-footer">
+                <a href="/" class="btn btn-danger btn-lg">Cancel</a>
+                <input type="submit" value="Add Tasks" class="btn btn-dark btn-lg">
+              </div>
+            </form> <!-- End of Form -->
+          
         </div>
       </div>
     </div>
