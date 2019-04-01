@@ -17,39 +17,6 @@
 
 </head>
 
-<!-- Start Nav Bar-->
-<!--
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">Navbar</a>
--->
-        <!-- Mobile 3 Dash Icon -->
-        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">To Do <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Character</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Rewards</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>-->
-<!-- End Nav Bar-->
-
 <div class="container">
     <div>
         <h2 class="d-inline-block align-middle">Tasks</h2>
@@ -82,12 +49,48 @@
                         </div>
                         <div class="form-group">
                                 <label for="Reward">Reward</label>
-                                <input type="text" class="form-control" id="reward">
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>Reward 1</option>
+                                        <option>Reward 2</option>
+                                        <option>Reward 3</option>
+                                        <option>Reward 4</option>
+                                      </select>
                         </div>
-                        <div class="form-group">
-                                <label for="EXP">Due Date</label>
-                                <input type="text" class="form-control" id="exp">
-                        </div>
+                        <div class="form-group row">
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                      <label for="exampleFormControlSelect1">Month</label>
+                                      <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>January</option>
+                                        <option>February</option>
+                                        <option>March</option>
+                                        <option>April</option>
+                                      </select>
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Date</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                      <option>1</option>
+                                      <option>2</option>
+                                      <option>3</option>
+                                      <option>4</option>
+                                      <option>5</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label for="exampleFormControlSelect1">Year</label>
+                                      <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>2019</option>
+                                        <option>2020</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                
+                              </div>
                     </form>
 
                 </div>
@@ -111,36 +114,6 @@
                 </div>
             </li>
             <% }); %>
-        <!--
-        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
-            Task 1
-            <div class="pull-right action-buttons">
-                <a href="http://www.jquery2dotnet.com"><i class="far fa-edit"></i></span></a>
-                <a href="http://www.jquery2dotnet.com"><i class="fas fa-trash-alt"></i></span></a>
-            </div>
-        </li>
-        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
-            Task 2
-            <div class="pull-right action-buttons">
-                <a href="http://www.jquery2dotnet.com"><i class="far fa-edit"></i></span></a>
-                <a href="http://www.jquery2dotnet.com"><i class="fas fa-trash-alt"></i></span></a>
-            </div>
-        </li>
-        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
-            Task 3
-            <div class="pull-right action-buttons">
-                <a href="http://www.jquery2dotnet.com"><i class="far fa-edit"></i></span></a>
-                <a href="http://www.jquery2dotnet.com"><i class="fas fa-trash-alt"></i></span></a>
-            </div>
-        </li>
-        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
-            Task 4
-            <div class="pull-right action-buttons">
-                <a href="http://www.jquery2dotnet.com"><i class="far fa-edit"></i></span></a>
-                <a href="http://www.jquery2dotnet.com"><i class="fas fa-trash-alt"></i></span></a>
-            </div>
-        </li>
-        -->
     </ul>
 </div>
 
