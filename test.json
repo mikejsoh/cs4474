@@ -1,10 +1,25 @@
 {
-    "IncompleteTasks": [],
+    "IncompleteTasks": [
+        {
+            "TaskTitle": "First Task",
+            "TaskDescription": "Adding first task to JSON file",
+            "TaskEXP": "9000",
+            "TaskRewardTitle": "Push change to branch",
+            "TaskRewardDescription": "Push change to the Karthik branch",
+            "TaskDueDate": "April 1"
+        }
+    ],
     "CompleteTasks": [],
     "FailedTasks": [],
-    "UnearnedRewards": [],
+    "UnearnedRewards": [
+        {
+            "RewardTitle": "Push change to branch",
+            "RewardDescription": "Push change to the Karthik branch"
+        }
+    ],
     "EarnedRewards": [],
     "ClaimedRewards": [],
     "FailedRewards": [],
-    "Character": []
+    "Character": [],
+    "TaskNumber": 0
 }

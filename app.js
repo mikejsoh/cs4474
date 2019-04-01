@@ -127,20 +127,32 @@ async function addTask(ctx) {
     
     let rawdata = fs.readFileSync('test.json');
     let subject = JSON.parse(rawdata);
+    
+    //Creating JSON object that is being appended into local JSON object
+    var taskObj = {};
+    taskObj["TaskTitle"] = postTaskTitle;
+    taskObj["TaskDescription"] = postTaskDescription;
+    taskObj["TaskEXP"] = postTaskEXP;
+    taskObj["TaskRewardTitle"] = postTaskRewardTitle;
+    taskObj["TaskRewardDescription"] = postTaskRewardDescription;
+    taskObj["TaskDueDate"] = postTaskDueDate;
+    
+    var rewardObj = {};
+    rewardObj["RewardTitle"] = postTaskRewardTitle;
+    rewardObj["RewardDescription"] = postTaskRewardDescription;
 
-//Appending to a JSON file 
-    //*Keeps appending so commented out*
-/*
-    subject.IncompleteTasks.push({"TaskTitle:", age:70});
-let newSubject = JSON.stringify(subject);
-fs.writeFileSync('test.json', newSubject);
+    //Appending taskObj + rewardObj to a local JSON object and then writing local object into JSON file
+    subject.IncompleteTasks.push(taskObj);
+    subject.UnearnedRewards.push(rewardObj);
+    let newSubject = JSON.stringify(subject, null, 4);
+    fs.writeFileSync('test.json', newSubject);
     
     await ctx.render('index', {
         title: "Tasks",
-        user: true,
+        userCreated: true,
         tasks: subject.IncompleteTasks
     });
-*/
+
 };
 	//Show Char.html
 async function showChar(ctx){
@@ -158,7 +170,7 @@ async function showReward(ctx){
 async function reset(ctx) {
     
     //Reset all Tasks and Rewards
-    fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":[]}, null, 4));
+    fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":[],"TaskNumber":0}, null, 4));
     
     //Just re-render index
     let rawdata = fs.readFileSync('test.json');

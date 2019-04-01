@@ -74,7 +74,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <a href="/resetNormal" class="btn btn-danger btn-lg">Reset Everything</a>
+        <a href="/reset" class="btn btn-danger btn-lg">Reset Everything</a>
         </div>
       </div>
     </div>
@@ -146,7 +146,7 @@
     <ul class="list-group">
       <% tasks.forEach( function(task) { %>
       <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
-        Task Name: <%= task.name %>
+        Task Name: <%= task.TaskTitle %>
         <div class="pull-right action-buttons">
           <a href="#"><i class="far fa-edit"></i></span></a>
           <a href="#"><i class="fas fa-trash-alt"></i></span></a>
