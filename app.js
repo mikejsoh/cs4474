@@ -79,7 +79,9 @@ async function addTask(ctx) {
 
 	//Show Char.html
 async function showChar(ctx){
-    await ctx.render('char');
+    await ctx.render('char', {
+        title: "Character"
+    });
 };	
 	
 	//Show Reward.html
