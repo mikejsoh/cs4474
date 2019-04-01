@@ -94,8 +94,12 @@ async function reset(ctx) {
     await ctx.render('index', {
         title: 'All my Tasks:',
         addTaskStatus: ' ',
+<<<<<<< HEAD
         user: ' ',
         tasks: subject.tasks
+=======
+        user: ' '
+>>>>>>> master
     });
     
     //Reset all Tasks and Rewards
