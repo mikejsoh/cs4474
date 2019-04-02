@@ -105,7 +105,8 @@
             </button>
           </div>
           
-            <form action="/" method="POST"> <!-- Start of Form -->
+        <form action="/" method="POST">
+          <!-- Start of Form -->
               <div class="form-group">
                 <label for="TaskTitle">Task Title</label>
                 <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
@@ -145,14 +146,24 @@
     <!-- Start of Task List -->
     <ul class="list-group">
       <% tasks.forEach( function(task) { %>
-      <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
+    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab" id=<%= task.TaskID %></li>
         Task Name: <%= task.TaskTitle %>
         <div class="pull-right action-buttons">
-          <a href="#"><i class="far fa-edit"></i></span></a>
-          <a href="#"><i class="fas fa-trash-alt"></i></span></a>
+        <button onclick="showId(this.value)" value="<%= task.TaskID %>" type="button" class="btn btn-default" aria-label="Left Align">
+          <span class="far fa-edit fa-lg" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+          <span class="fas fa-trash-alt fa-lg" aria-hidden="true"></span>
+        </button>
         </div>
       </li>
       <% }); %>
     </ul>
     <!-- End of Task List -->
   </div>
+
+<script>
+function showId(val) {
+  console.log("button value:" + val);
+}
+</script>

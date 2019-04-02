@@ -1,6 +1,7 @@
-<h1> Reward </h1>
+<h1><%- title %></h1>
 
 <div class="container">
+    <!-- 
     <ul class="list-group">
         <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
             Reward Title
@@ -8,12 +9,27 @@
                 <button type="button" class="btn btn-success">Claim</button>
             </div>
         </li>
+    </ul>
+    -->
+    <!-- Start of Unearned Reward List -->
+    <h4>Active Unearned Reward List </h4>
+    <ul class="list-group">
+        <% unearnedRewards.forEach( function(unearnedReward) { %>
         <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
-            Reward Title
-            <div class="pull-right action-buttons">
-                <button type="button" class="btn btn-success">Claim</button>
-            </div>
+            Reward Title: <%= unearnedReward.RewardTitle %>
         </li>
+        <% }); %>
+    </ul>
+    <!-- End of Unearned Reward List -->
+</div>
 
+<div class="container mt-3">
+    <h4>Earned Reward List</h4>
+    <ul class="list-group">
+        <% earnedRewards.forEach( function(earnedReward) { %>
+        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
+            Reward Title: <%= earnedReward.RewardTitle %>
+        </li>
+        <% }); %>
     </ul>
 </div>

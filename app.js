@@ -162,8 +162,12 @@ async function showChar(ctx){
 };	
 	
 	//Show Reward.html
-async function showReward(ctx){
-    await ctx.render('reward');
+async function showReward(ctx) {
+    await ctx.render('reward', {
+        title: "Rewards",
+        unearnedRewards: subject.UnearnedRewards,
+        earnedRewards: subject.EarnedRewards
+    });
 };
 
     //Reset Everything except character
