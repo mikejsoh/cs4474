@@ -134,6 +134,9 @@ async function addTask(ctx) {
     let postTaskID = subject.TaskIDCounter + 1; // grabs last task id from json file
     subject.TaskIDCounter = postTaskID;         // updates the task id counter
    
+    let postRewardID = subject.RewardIDCounter + 1;
+    subject.RewardIDCounter = postTaskID;         // updates the reward id counter
+   
     //Creating JSON object that is being appended into local JSON object
     var taskObj = {};
     taskObj["TaskID"] = postTaskID;
@@ -145,6 +148,7 @@ async function addTask(ctx) {
     taskObj["TaskDueDate"] = postTaskDueDate;
     
     var rewardObj = {};
+    rewardObj["RewardID"] = postRewardID;
     rewardObj["RewardTitle"] = postTaskRewardTitle;
     rewardObj["RewardDescription"] = postTaskRewardDescription;
 
@@ -187,10 +191,9 @@ async function editTaskDetails(ctx) {
 async function updateTask(ctx) {
     const body = ctx.request.body;
     const task_id = ctx.params.id;
-    console.log("task_id: " + task_id);
     const task = subject.IncompleteTasks.find(x => x.TaskID == task_id);
-    console.log("task title: " + task.TaskTitle);
     var incompleteTasks = subject.IncompleteTasks;
+    const unearnedRewards = subject.UnearnedRewards;
     
     for (var i = 0; i < incompleteTasks.length; ++i) {
         if (incompleteTasks[i].TaskID == task_id) {
@@ -200,19 +203,30 @@ async function updateTask(ctx) {
             incompleteTasks[i].TaskRewardTitle = body.taskRewardTitle
             incompleteTasks[i].TaskRewardDescription = body.taskRewardDescription
             incompleteTasks[i].TaskDueDate = body.taskDueDate;
+        }
+    }
+
+    for (let i = 0; i < unearnedRewards.length; ++i) {
+        // Task and Reward 1:1 relationship so ID's will be the same
+        if (unearnedRewards[i].RewardID == task_id) { 
+            unearnedRewards[i].RewardTitle = body.taskRewardTitle;
+            unearnedRewards[i].RewardDescription = body.taskRewardDescription;
+        }
+    }
 
             let newSubject = JSON.stringify(subject, null, 4);
             fs.writeFileSync('test.json', newSubject);
-        }
-    }
+
     ctx.redirect('/task/' + task_id);
 }
 
 async function deleteTask(ctx) {
     const incompleteTasks = subject.IncompleteTasks;
+    const unearnedRewards = subject.UnearnedRewards;
     const task_id = ctx.params.id;
     const taskIndex = incompleteTasks.findIndex(x => x.TaskID == task_id);
     incompleteTasks.splice(taskIndex, 1);
+    unearnedRewards.splice(taskIndex, 1);
     
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject);
@@ -241,7 +255,7 @@ async function showReward(ctx) {
 async function reset(ctx) {
     
     //Reset all Tasks and Rewards
-    fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":[],"TaskNumber":0, "TaskIDCounter": 0}, null, 4));
+    fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":[],"TaskNumber":0, "TaskIDCounter": 0, "RewardIDCounter": 0}, null, 4));
     
     //Just re-render index
     let rawdata = fs.readFileSync('test.json');

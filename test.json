@@ -14,6 +14,7 @@
     "FailedTasks": [],
     "UnearnedRewards": [
         {
+            "RewardID": 1,
             "RewardTitle": "Reward 1",
             "RewardDescription": "Reward 1 Description"
         }
@@ -23,5 +24,6 @@
     "FailedRewards": [],
     "Character": [],
     "TaskNumber": 0,
-    "TaskIDCounter": 1
+    "TaskIDCounter": 1,
+    "RewardIDCounter": 1
 }
