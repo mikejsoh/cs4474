@@ -1,0 +1,35 @@
+<h1><%- title %></h1>
+<h2><%- task.TaskTitle %></h2>
+
+<form action="/task/<%= task.TaskID %>" method="POST">
+    <div class="form-group">
+        <label for="TaskTitle">Task Title</label>
+        <input type="text" class="form-control" name="taskTitle" id="TaskTitle" value="<%= task.TaskTitle %>">
+    </div>
+    <div class="form-group">
+        <label for="TaskDescription">Task Description</label>
+        <textarea class="form-control" id="TaskDescription" name="taskDescription"
+            rows="3"><%= task.TaskDescription %></textarea>
+    </div>
+    <div class="form-group">
+        <label for="EXP">EXP</label>
+        <input type="text" class="form-control" name="taskEXP" id="exp" value="<%= task.TaskEXP %>">
+    </div>
+    <div class="form-group">
+        <label for="Reward">Reward Title</label>
+        <input type="text" class="form-control" name="taskRewardTitle" id="reward" value="<%= task.TaskRewardTitle %>">
+    </div>
+    <div class="form-group">
+        <label for="RewardDescription">Reward Description</label>
+        <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"><%= task.TaskRewardDescription %></textarea>
+    </div>
+    <div class="form-group">
+        <label for="DueDate">Due Date</label>
+        <input type="text" class="form-control" id="TaskDueDate" name="taskDueDate" value="<%= task.TaskDueDate %>">
+    </div>
+
+    <div class="modal-footer">
+        <a href="/" class="btn btn-danger btn-lg">Cancel</a>
+        <input type="submit" value="Save" class="btn btn-dark btn-lg">
+    </div>
+</form>

@@ -146,24 +146,14 @@
     <!-- Start of Task List -->
     <ul class="list-group">
       <% tasks.forEach( function(task) { %>
-    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab" id=<%= task.TaskID %></li>
-        Task Name: <%= task.TaskTitle %>
+    <li href="" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab" id=<%= task.TaskID %></li>
+        <a href="/task/<%= task.TaskID %>"> Task Name: <%= task.TaskTitle %></a>
         <div class="pull-right action-buttons">
-        <button onclick="showId(this.value)" value="<%= task.TaskID %>" type="button" class="btn btn-default" aria-label="Left Align">
-          <span class="far fa-edit fa-lg" aria-hidden="true"></span>
-        </button>
-        <button type="button" class="btn btn-default" aria-label="Left Align">
-          <span class="fas fa-trash-alt fa-lg" aria-hidden="true"></span>
-        </button>
+        <a href="/task/edit/<%= task.TaskID %>" class="btn btn-default far fa-edit fa-lg" role="button"></a>
+        <a href="/task/delete/<%= task.TaskID %>" class="btn btn-default fas fa-trash-alt fa-lg" role="button"></a>
         </div>
       </li>
       <% }); %>
     </ul>
     <!-- End of Task List -->
   </div>
-
-<script>
-function showId(val) {
-  console.log("button value:" + val);
-}
-</script>
