@@ -1,29 +1,22 @@
 <h1><%- title %></h1>
 
 <!-- Start of Unearned Reward List -->
+<% if (unearnedRewards.length > 0) { %>
 <div class="container">
-    <!-- 
-    <ul class="list-group">
-        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
-            Reward Title
-            <div class="pull-right action-buttons">
-                <button type="button" class="btn btn-success">Claim</button>
-            </div>
-        </li>
-    </ul>
-    -->
     <h4>In Progress Rewards</h4>
     <ul class="list-group">
         <% unearnedRewards.forEach( function(unearnedReward) { %>
         <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
-            Reward Title: <%= unearnedReward.RewardTitle %>
+            <%= unearnedReward.RewardTitle %>
         </li>
         <% }); %>
     </ul>
 </div>
+<% } %>
 <!-- End of Unearned Reward List -->
 
 <!-- Start of Earned Reward List -->
+<% if (earnedRewards.length > 0) { %>
 <div class="container mt-5">
     <h4>Earned Rewards</h4>
     <ul class="list-group">
@@ -31,23 +24,29 @@
         <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
             Reward Title: <%= earnedReward.RewardTitle %>
             <div class="pull-right action-buttons ">
-                <a href="" class="btn btn-success" role="button">Claim</a>
+                <form action="/reward/claim/<%= earnedReward.RewardID %>" method="POST">
+                    <input type="submit" value="Claim" class="btn btn-success">
+                </form>
+
             </div>
         </li>
         <% }); %>
     </ul>
 </div>
+<% } %>
 <!-- End of Earned Reward List -->
 
-<!-- Start of Earned Reward List -->
+<!-- Start of Claimed Reward List -->
+<% if (claimedRewards.length > 0) { %>
 <div class="container mt-5">
-        <h4>Claimed Rewards</h4>
-        <ul class="list-group">
-            <% claimedRewards.forEach( function(claimedReward) { %>
-            <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
-                Reward Title: <%= claimedReward.RewardTitle %>
-            </li>
-            <% }); %>
-        </ul>
-    </div>
-    <!-- End of Earned Reward List -->
+    <h4>Claimed Rewards</h4>
+    <ul class="list-group">
+        <% claimedRewards.forEach( function(claimedReward) { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
+            <%= claimedReward.RewardTitle %> (ID: <%= claimedReward.RewardID %>)
+        </li>
+        <% }); %>
+    </ul>
+</div>
+<% } %>
+<!-- End of Claimed Reward List -->

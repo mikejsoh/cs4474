@@ -78,6 +78,9 @@ router.get('/task/edit/:id', editTaskDetails);  // Edit Task Form
 router.get('/task/:id', showTaskDetails);       // Task Details
 router.post('/task/:id', updateTask);           // Task Update Post Method
 router.get('/task/delete/:id', deleteTask);     // Task Delete Method
+
+// Reward Routes
+router.post('/reward/claim/:id', claimReward);  // Claim Reward Method
 //---------------------------------------------------
 //Router functions
 	//Show Index.html
@@ -214,14 +217,38 @@ async function updateTask(ctx) {
         }
     }
 
-            let newSubject = JSON.stringify(subject, null, 4);
-            fs.writeFileSync('test.json', newSubject);
+    let newSubject = JSON.stringify(subject, null, 4);
+    fs.writeFileSync('test.json', newSubject);
 
     ctx.redirect('/task/' + task_id);
 }
 
-async function claimReward(ctx) {
+/**
+ * Generic array sorting
+ *
+ * @param property
+ * @returns {Function}
+ */
+var sortByProperty = function (property) {
+    return function (x, y) {
+        return ((x[property] === y[property]) ? 0 : ((x[property] > y[property]) ? 1 : -1));
+    };
+};
 
+async function claimReward(ctx) {
+    const reward_id = ctx.params.id;
+    const rewardIndex = subject.EarnedRewards.findIndex(x => x.RewardID == reward_id);
+    let reward = subject.EarnedRewards[rewardIndex];
+
+    subject.ClaimedRewards.push(reward);            // append to ClaimedRewards[]
+    subject.EarnedRewards.splice(rewardIndex, 1);   // delete from EarnedRewards[]
+    subject.ClaimedRewards.sort(sortByProperty('RewardID')); // sort array by RewardID
+    
+
+    let newSubject = JSON.stringify(subject, null, 4);
+    fs.writeFileSync('test.json', newSubject);
+
+    ctx.redirect('/reward');
 }
 
 async function deleteTask(ctx) {
