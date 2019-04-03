@@ -1,7 +1,7 @@
 <!-- If User not created, show User Creation Modal --> 
 <% if (userCreated === false) { %>
 <script type="text/javascript">
-    jQuery(window).on('load',function() {
+  jQuery(window).on('load', function () {
         jQuery('#userCreationModal').modal('show');
     });
 </script>
@@ -150,9 +150,35 @@
         <a href="/task/<%= task.TaskID %>"> Task Name: <%= task.TaskTitle %></a>
         <div class="pull-right action-buttons">
         <a href="/task/edit/<%= task.TaskID %>" class="btn btn-default far fa-edit fa-lg" role="button"></a>
-        <a href="/task/delete/<%= task.TaskID %>" class="btn btn-default fas fa-trash-alt fa-lg" role="button"></a>
+        <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#confirmDeleteModal<%= task.TaskID %>">
+          <span class="fas fa-trash-alt fa-lg" aria-hidden="true"></span>
+        </button>
         </div>
       </li>
+
+    <!-- Start of Confirm Delete Modal -->
+    <div class="modal fade" id="confirmDeleteModal<%= task.TaskID %>" tabindex="-1" role="dialog"
+      aria-labelledby="confirmDeleteModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Task?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            This will permanently delete the task and the reward associated with the task. Do you want to continue?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No Thanks</button>
+            <a href="/task/delete/<%= task.TaskID %>" class="btn btn-danger" role="button">Delete Task</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Confirm Delete Modal -->
+
       <% }); %>
     </ul>
     <!-- End of Task List -->
