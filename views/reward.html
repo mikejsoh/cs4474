@@ -1,5 +1,6 @@
 <h1><%- title %></h1>
 
+<!-- Start of Unearned Reward List -->
 <div class="container">
     <!-- 
     <ul class="list-group">
@@ -11,25 +12,42 @@
         </li>
     </ul>
     -->
-    <!-- Start of Unearned Reward List -->
-    <h4>Active Unearned Reward List </h4>
+    <h4>In Progress Rewards</h4>
     <ul class="list-group">
         <% unearnedRewards.forEach( function(unearnedReward) { %>
-        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
+        <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
             Reward Title: <%= unearnedReward.RewardTitle %>
         </li>
         <% }); %>
     </ul>
-    <!-- End of Unearned Reward List -->
 </div>
+<!-- End of Unearned Reward List -->
 
-<div class="container mt-3">
-    <h4>Earned Reward List</h4>
+<!-- Start of Earned Reward List -->
+<div class="container mt-5">
+    <h4>Earned Rewards</h4>
     <ul class="list-group">
         <% earnedRewards.forEach( function(earnedReward) { %>
-        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab">
+        <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
             Reward Title: <%= earnedReward.RewardTitle %>
+            <div class="pull-right action-buttons ">
+                <a href="" class="btn btn-success" role="button">Claim</a>
+            </div>
         </li>
         <% }); %>
     </ul>
 </div>
+<!-- End of Earned Reward List -->
+
+<!-- Start of Earned Reward List -->
+<div class="container mt-5">
+        <h4>Claimed Rewards</h4>
+        <ul class="list-group">
+            <% claimedRewards.forEach( function(claimedReward) { %>
+            <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
+                Reward Title: <%= claimedReward.RewardTitle %>
+            </li>
+            <% }); %>
+        </ul>
+    </div>
+    <!-- End of Earned Reward List -->

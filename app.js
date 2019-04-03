@@ -220,6 +220,10 @@ async function updateTask(ctx) {
     ctx.redirect('/task/' + task_id);
 }
 
+async function claimReward(ctx) {
+
+}
+
 async function deleteTask(ctx) {
     const incompleteTasks = subject.IncompleteTasks;
     const unearnedRewards = subject.UnearnedRewards;
@@ -247,7 +251,8 @@ async function showReward(ctx) {
     await ctx.render('reward', {
         title: "Rewards",
         unearnedRewards: subject.UnearnedRewards,
-        earnedRewards: subject.EarnedRewards
+        earnedRewards: subject.EarnedRewards,
+        claimedRewards: subject.ClaimedRewards
     });
 };
 
