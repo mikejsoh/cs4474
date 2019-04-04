@@ -1,41 +1,88 @@
 <h1><%- title %></h1>
-
-<div class="container">
-	<div class="card">
-		<div class="row">
-			<div class="col-sm-6">
-				Image goes here
-			</div>
-
-			<div class="col-sm-6">
-				<div class="card-body">
-					<h4 class="card-title">Name: Michael Oh</h4>
-					<h4 class="card-title">Level: 1</h4>
-					<div class="row d-flex align-items-center">
-						<div class="col-md-2 ">
-							Health:
-						</div>
-						<div class="col-md-10">
-							<div class="progress align-middle">
-								<div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
-									aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-						</div>
+<div class="row">
+	<div class="col-12">
+		<div class="card shadow-sm">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-4">
+						Character Image
 					</div>
-					<div class="row d-flex align-items-center">
-							<div class="col-md-2 ">
-								EXP:
-							</div>
-							<div class="col-md-10">
+					<div class="col-sm-8">
+						<h3>Michael Oh</h3>
+						<h5>Level: 1</h5>
+
+						<div class="row d-flex align-items-center">
+							<div class="col-md-2"><b>Health:</b></div>
+							<div class="col-md-6">
 								<div class="progress align-middle">
-									<div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75"
-										aria-valuemin="0" aria-valuemax="100"></div>
+									<div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
 						</div>
 
+						<div class="row d-flex align-items-center">
+							<div class="col-md-2"><b>EXP:</b></div>
+							<div class="col-md-6">
+								<div class="progress align-middle">
+									<div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-4">
+		<div class="card shadow-sm">
+			<div class="card-body">
+				<div class="row d-flex align-items-center">
+					<div class="col-9">
+						Total Tasks Completed
+						<h4>10</h4>
+					</div>
+					<div class="col-3">
+						<i class="fas fa-tasks fa-2x"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="col-4">
+		<div class="card shadow-sm">
+			<div class="card-body">
+				<div class="row d-flex align-items-center">
+					<div class="col-9">
+						Total Rewards Claimed
+						<h4>10</h4>
+					</div>
+					<div class="col-3">
+						<i class="fas fa-check fa-2x"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-4">
+		<div class="card shadow-sm">
+			<div class="card-body">
+				<div class="row d-flex align-items-center">
+					<div class="col-9">
+						Missed Tasks
+						<h4>10</h4>
+					</div>
+					<div class="col-3">
+						<i class="fas fa-tasks fa-2x"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>

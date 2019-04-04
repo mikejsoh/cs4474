@@ -2,11 +2,11 @@
 
 <!-- Start of Unearned Reward List -->
 <% if (unearnedRewards.length > 0) { %>
-<div class="container">
-    <h4>In Progress Rewards</h4>
-    <ul class="list-group">
+<div class="card shadow-sm">
+    <h5 class="card-header">Pending Rewards</h5>
+    <ul class="list-group list-group-flush">
         <% unearnedRewards.forEach( function(unearnedReward) { %>
-        <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
+        <li class="list-group-item">
             <%= unearnedReward.RewardTitle %>
         </li>
         <% }); %>
@@ -17,17 +17,16 @@
 
 <!-- Start of Earned Reward List -->
 <% if (earnedRewards.length > 0) { %>
-<div class="container mt-5">
-    <h4>Earned Rewards</h4>
-    <ul class="list-group">
+<div class="card shadow-sm mt-5">
+    <h5 class="card-header">Earned Rewards</h5>
+    <ul class="list-group list-group-flush">
         <% earnedRewards.forEach( function(earnedReward) { %>
-        <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
-            Reward Title: <%= earnedReward.RewardTitle %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <%= earnedReward.RewardTitle %>
             <div class="pull-right action-buttons ">
                 <form action="/reward/claim/<%= earnedReward.RewardID %>" method="POST">
                     <input type="submit" value="Claim" class="btn btn-success">
                 </form>
-
             </div>
         </li>
         <% }); %>
@@ -38,12 +37,12 @@
 
 <!-- Start of Claimed Reward List -->
 <% if (claimedRewards.length > 0) { %>
-<div class="container mt-5">
-    <h4>Claimed Rewards</h4>
-    <ul class="list-group">
+<div class="card shadow-sm mt-5">
+    <h5 class="card-header">Claimed Rewards</h5>
+    <ul class="list-group list-group-flush">
         <% claimedRewards.forEach( function(claimedReward) { %>
-        <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
-            <%= claimedReward.RewardTitle %> (ID: <%= claimedReward.RewardID %>)
+        <li class="list-group-item">
+            <%= claimedReward.RewardTitle %>
         </li>
         <% }); %>
     </ul>
