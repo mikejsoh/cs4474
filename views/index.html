@@ -128,21 +128,28 @@
     <ul class="list-group">
         <% tasks.forEach( function(task) { %>
 
-        <li href="" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-            role="tab" id=<%= task.TaskID %></li> <a href="/task/<%= task.TaskID %>"> Task Name:
-            <%= task.TaskTitle %></a>
-            <div class="pull-right action-buttons">
-                <!-- <a href="/task/edit/<%= task.TaskID %>" class="btn btn-default far fa-edit fa-lg" role="button"></a> -->
-                <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal"
-                    data-target="#editTaskModal<%= task.TaskID %>">
+        <li href="" class="list-group-item list-group-item-action" role="tab" id=<%= task.TaskID %></li>
+        <div class="row align-items-center">
+            <div class="col-4">
+                <a href="/task/<%= task.TaskID %>"> Task Name: <%= task.TaskTitle %></a>
+            </div>
+            <div class="col-4">
+                
+            </div>
+            <div class="col-4 text-right">
+                <button type="button" class="btn btn-default d-inline" aria-label="Left Align" data-toggle="modal" data-target="#editTaskModal<%= task.TaskID %>">
                     <span class="far fa-edit fa-lg" aria-hidden="true"></span>
                 </button>
-                <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal"
-                    data-target="#confirmDeleteModal<%= task.TaskID %>">
+                <button type="button" class="btn btn-default d-inline" aria-label="Left Align" data-toggle="modal" data-target="#confirmDeleteModal<%= task.TaskID %>">
                     <span class="fas fa-trash-alt fa-lg" aria-hidden="true"></span>
                 </button>
+                <form class="d-inline" action="/task/claim/<%= task.TaskID %>" method="POST">
+                    <input type="hidden">
+                    <button class="btn" type="submit"><i class="fas fa-check" aria-hidden="true"></i></button>
+                </form>
             </div>
-        </li>
+            </div>
+
         <!-- Start of Confirm Delete Modal -->
         <% include partials/_confirmDeleteModal.html %>
         <!-- End of Confirm Delete Modal -->

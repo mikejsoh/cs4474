@@ -6,6 +6,7 @@ const koaEjs = require('koa-ejs');
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('koa-bodyparser');
+const serve = require('koa-static');
 
 //Reading a file
 let rawdata = fs.readFileSync('test.json');
@@ -30,6 +31,8 @@ const router = new koaRouter();
 app.use(json());
 //BodyParser Middleware
 app.use(bodyParser());
+
+app.use(serve(__dirname + '/public'));
 
 //Ejs templating options, injects views into layout.html
 koaEjs(app, {
@@ -78,6 +81,7 @@ router.get('/task/edit/:id', editTaskDetails);  // Edit Task Form
 router.get('/task/:id', showTaskDetails);       // Task Details
 router.post('/task/:id', updateTask);           // Task Update Post Method
 router.get('/task/delete/:id', deleteTask);     // Task Delete Method
+router.post('/task/claim/:id', claimTask);       // Claim Task Method
 
 // Reward Routes
 router.post('/reward/claim/:id', claimReward);  // Claim Reward Method
@@ -251,6 +255,29 @@ async function claimReward(ctx) {
     ctx.redirect('/reward');
 }
 
+async function claimTask(ctx) {
+    const task_id = ctx.params.id;
+    const taskIndex = subject.IncompleteTasks.findIndex(x => x.TaskID == task_id);
+    let task = subject.IncompleteTasks[taskIndex];
+
+    // Task and Reward 1:1 relationship so ID's will be the same
+    const rewardIndex = subject.UnearnedRewards.findIndex(reward => reward.RewardID == task_id);
+    let reward = subject.UnearnedRewards[rewardIndex];
+
+    // Move Task from IncompleteTask[] to CompleteTask[]
+    subject.CompleteTasks.push(task);
+    subject.IncompleteTasks.splice(taskIndex, 1);
+
+    // Move Reward from UnearnedRewards[] to EarnedRewards[]
+    subject.EarnedRewards.push(reward);
+    subject.UnearnedRewards.splice(rewardIndex, 1);
+
+    let newSubject = JSON.stringify(subject, null, 4);
+    fs.writeFileSync('test.json', newSubject);
+
+    ctx.redirect('/');
+}
+
 async function deleteTask(ctx) {
     const incompleteTasks = subject.IncompleteTasks;
     const unearnedRewards = subject.UnearnedRewards;
@@ -269,7 +296,10 @@ async function deleteTask(ctx) {
 //Show Char.html
 async function showChar(ctx){
     await ctx.render('char', {
-        title: "Character"
+        title: "Character",
+        completedTasks: subject.CompleteTasks,
+        claimedRewards: subject.ClaimedRewards,
+        missedTasks: subject.FailedTasks
     });
 };	
 	
