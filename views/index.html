@@ -1,7 +1,7 @@
-<!-- If User not created, show User Creation Modal --> 
+<!-- If User not created, show User Creation Modal -->
 <% if (userCreated === false) { %>
 <script type="text/javascript">
-  jQuery(window).on('load', function () {
+    jQuery(window).on('load', function () {
         jQuery('#userCreationModal').modal('show');
     });
 </script>
@@ -29,25 +29,23 @@
 
 <!-- User Creation Modal -->
 <div id="userCreationModal" class="modal show" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        
-        <h4 class="modal-title">Welcome</h4>
-      </div>
-      <div class="modal-body">
-        <p>Please type your name</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <a href="/reset" class="btn btn-danger btn-lg">Reset</a>
-      </div>
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Welcome</h4>
+            </div>
+            <div class="modal-body">
+                <p>Please type your name</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="/reset" class="btn btn-danger btn-lg">Reset</a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-    
+
 
 <!-- Example
 <% if (userCreated === 'true') { %>
@@ -61,125 +59,115 @@
 
 <!-- Reset Modal -->
 <div id="resetModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        
-        <h4 class="modal-title">Warning</h4>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to reset all tasks, rewards, and character progress? This action cannot be reversed.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <a href="/reset" class="btn btn-danger btn-lg">Reset Everything</a>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to reset all tasks, rewards, and character progress? This action cannot be reversed.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="/reset" class="btn btn-danger btn-lg">Reset Everything</a>
+            </div>
         </div>
-      </div>
     </div>
 </div>
 
-
-
-
-  <div class="container">
+<div class="container">
     <div>
-      <h2 class="d-inline-block align-middle">Tasks</h2>
+        <h2 class="d-inline-block align-middle">Tasks</h2>
 
-      <!-- + Button to add task -->
-      <button type="button" class="btn btn-primary fas fa-plus float-right" data-toggle="modal"
-        data-target="#addTaskModal">
-      </button>
+        <!-- + Button to add task -->
+        <button type="button" class="btn btn-primary fas fa-plus float-right" data-toggle="modal"
+            data-target="#addTaskModal">
+        </button>
     </div>
-      
+
     <!-- Add Task Modal-->
     <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addTaskModalLabel">Create New Task</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        <div class="modal-body">
-        <form action="/" method="POST">
-          <!-- Start of Form -->
-              <div class="form-group">
-                <label for="TaskTitle">Task Title</label>
-                <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
-              </div>
-              <div class="form-group">
-                <label for="TaskDescription">Task Description</label>
-                <textarea class="form-control" id="TaskDescription" name="taskDescription" rows="3"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="EXP">EXP</label>
-                <input type="text" class="form-control" name="taskEXP" id="exp">
-              </div>
-              <div class="form-group">
-                <label for="Reward">Reward Title</label>
-                <input type="text" class="form-control" name="taskRewardTitle" id="reward">
-              </div>
-              <div class="form-group">
-                <label for="RewardDescription">Reward Description</label>
-                <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="DueDate">Due Date</label>
-                <input type="text" class="form-control" id="TaskDueDate" name="taskDueDate">
-              </div>
-              
-              <div class="modal-footer">
-                <a href="/" class="btn btn-danger btn-lg">Cancel</a>
-                <input type="submit" value="Add Task" class="btn btn-dark btn-lg">
-              </div>
-            </form> <!-- End of Form -->
-          </div>
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTaskModalLabel">Create New Task</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Start of Form -->
+                <form action="/" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="TaskTitle">Task Title</label>
+                            <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="TaskDescription">Task Description</label>
+                            <textarea class="form-control" id="TaskDescription" name="taskDescription" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="EXP">EXP</label>
+                            <input type="text" class="form-control" name="taskEXP" id="exp">
+                        </div>
+                        <div class="form-group">
+                            <label for="Reward">Reward Title</label>
+                            <input type="text" class="form-control" name="taskRewardTitle" id="reward">
+                        </div>
+                        <div class="form-group">
+                            <label for="RewardDescription">Reward Description</label>
+                            <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="DueDate">Due Date</label>
+                            <input type="text" class="form-control" id="TaskDueDate" name="taskDueDate">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                            <!-- <a href="/" class="btn btn-danger btn-lg">Cancel</a> -->
+                            <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Cancel</button>
+                            <input type="submit" value="Add Task" class="btn btn-dark btn-lg">
+                    </div>
+                </form>
+                <!-- End of Form -->  
+            </div>
         </div>
-      </div>
     </div>
     <!-- End of Add Task Modal -->
 
     <!-- Start of Task List -->
     <ul class="list-group">
-      <% tasks.forEach( function(task) { %>
-    <li href="" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" role="tab" id=<%= task.TaskID %></li>
-        <a href="/task/<%= task.TaskID %>"> Task Name: <%= task.TaskTitle %></a>
-        <div class="pull-right action-buttons">
-        <a href="/task/edit/<%= task.TaskID %>" class="btn btn-default far fa-edit fa-lg" role="button"></a>
-        <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#confirmDeleteModal<%= task.TaskID %>">
-          <span class="fas fa-trash-alt fa-lg" aria-hidden="true"></span>
-        </button>
-        </div>
-      </li>
+        <% tasks.forEach( function(task) { %>
 
-    <!-- Start of Confirm Delete Modal -->
-    <div class="modal fade" id="confirmDeleteModal<%= task.TaskID %>" tabindex="-1" role="dialog"
-      aria-labelledby="confirmDeleteModal" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Delete Task?</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            This will permanently delete the task and the reward associated with the task. Do you want to continue?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">No Thanks</button>
-            <a href="/task/delete/<%= task.TaskID %>" class="btn btn-danger" role="button">Delete Task</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End of Confirm Delete Modal -->
+        <li href="" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            role="tab" id=<%= task.TaskID %></li> <a href="/task/<%= task.TaskID %>"> Task Name:
+            <%= task.TaskTitle %></a>
+            <div class="pull-right action-buttons">
+                <!-- <a href="/task/edit/<%= task.TaskID %>" class="btn btn-default far fa-edit fa-lg" role="button"></a> -->
+                <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal"
+                    data-target="#editTaskModal<%= task.TaskID %>">
+                    <span class="far fa-edit fa-lg" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal"
+                    data-target="#confirmDeleteModal<%= task.TaskID %>">
+                    <span class="fas fa-trash-alt fa-lg" aria-hidden="true"></span>
+                </button>
+            </div>
+        </li>
+        <!-- Start of Confirm Delete Modal -->
+        <% include partials/_confirmDeleteModal.html %>
+        <!-- End of Confirm Delete Modal -->
 
-      <% }); %>
+        <!-- Start of Edit Task Modal -->
+        <% include partials/_editTaskModal.html %>
+        <!-- End of Edit Task Modal -->
+
+        <% }); %>
     </ul>
     <!-- End of Task List -->
-  </div>
+</div>

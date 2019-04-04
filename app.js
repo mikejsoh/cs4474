@@ -220,7 +220,7 @@ async function updateTask(ctx) {
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject);
 
-    ctx.redirect('/task/' + task_id);
+    ctx.redirect('/');
 }
 
 /**
