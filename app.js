@@ -102,12 +102,26 @@ async function index(ctx){
     var taskExpiredBoolInitial = TaskExpiredCheck();
     console.log(taskExpiredBoolInitial);
     if (taskExpiredBoolInitial == true) {
-        ctx.redirect('/');}   
+        ctx.redirect('/');
+    }
+
+    // Finds all tasks due today
+    var todayDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+    var todayTasks = subject.IncompleteTasks.filter(function (task) {
+        // console.log("task.TaskDueDate: " + task.TaskDueDate);
+        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "2000/01/20"
+        var taskDate = new Date(parseInt(taskDateArray[0], 10), parseInt(taskDateArray[1], 10) - 1, parseInt(taskDateArray[2], 10))
+
+        return taskDate.getTime() == todayDate.getTime();
+    });
+    
+    // console.log(todayTasks);
     
     await ctx.render('index', {
         title: "Tasks",
         userCreated: charCreated,
-        tasks: subject.IncompleteTasks
+        incompleteTasks: subject.IncompleteTasks,
+        todayTasks: todayTasks
     }); 
 };
 
@@ -166,7 +180,7 @@ async function addTask(ctx) {
     await ctx.render('index', {
         title: "Tasks",
         userCreated: charCreated,
-        tasks: subject.IncompleteTasks
+        incompleteTasks: subject.IncompleteTasks
     });
     //ctx.redirect('/');
 };
