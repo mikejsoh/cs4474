@@ -30,18 +30,15 @@ koaEjs(app, {
 });
 
 //Functions
-//Task Due Date Expired Check
 
-var minutes = 1, the_interval = minutes * 60 * 1000;
-setInterval(function() {
-    console.log("I am doing my 1 minutes check");
-    var now = new Date();
+//Task Due Date Expired Check
+//Returns False (if tasks have not expired) or True (there is a task that expired)
+function TaskExpiredCheck() {
+    var now = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate())
     
     let rawdata = fs.readFileSync('test.json');
     let subject = JSON.parse(rawdata);
-    
-    var listOfTasks = subject.IncompleteTasks;
-    var arrayLength = listOfTasks.length;
+    var taskExpired = false;
     
     for (var i = 0; i < subject.IncompleteTasks.length; i++) {
         var inputTask = subject.IncompleteTasks[i]; 
@@ -51,15 +48,13 @@ setInterval(function() {
         
         var reward_description = inputTask["TaskRewardDescription"] //Obtain Task's Reward Description
         if (inputDate < now) { //InputDate is in the past
-            console.log("Date is in the past");
-            
+            taskExpired = true;
             subject.IncompleteTasks.splice(i,1); //remove from incomplete tasks
             subject.FailedTasks.push(inputTask); //push onto failed tasks
             
             const rewardIndex = subject.UnearnedRewards.findIndex(x => x.RewardDescription == reward_description);
             let reward = subject.UnearnedRewards[rewardIndex];
-
-              
+     
             subject.UnearnedRewards.splice(rewardIndex, 1);   //remove from unearned rewards
             subject.FailedRewards.push(reward); //push onto failed rewards
             
@@ -72,7 +67,8 @@ setInterval(function() {
     
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject); 
-}, the_interval);
+    return taskExpired;
+}
 
 //Route mapping 
 router.get('/', index);
@@ -80,6 +76,8 @@ router.post('/', addTask);
 router.get('/char', showChar);
 router.get('/reward', showReward);
 router.get('/reset', reset);
+
+router.post('/charCreate', createChar);
 
 // Task Routes
 router.get('/task/edit/:id', editTaskDetails);  // Edit Task Form
@@ -91,46 +89,30 @@ router.post('/task/claim/:id', claimTask);       // Claim Task Method
 // Reward Routes
 router.post('/reward/claim/:id', claimReward);  // Claim Reward Method
 //---------------------------------------------------
-//Router functions
+
 	//Show Index.html
 async function index(ctx){
     let rawdata = fs.readFileSync('test.json');
     let subject = JSON.parse(rawdata);
     var charCreated = true;
     if (subject.Character === undefined || subject.Character.length == 0) {
-        charCreated = false;
-    }
+        charCreated = false;}
+    
+    //Checking if any tasks have expired
+    var taskExpiredBoolInitial = TaskExpiredCheck();
+    console.log(taskExpiredBoolInitial);
+    if (taskExpiredBoolInitial == true) {
+        ctx.redirect('/');}   
     
     await ctx.render('index', {
         title: "Tasks",
         userCreated: charCreated,
         tasks: subject.IncompleteTasks
-    });
+    }); 
 };
 
-/*
-async function fakeaddTask(ctx) {
-    const body = ctx.request.body;
-    console.log(body.taskName);
-    var postTaskName = body.taskName;
-    
-    
-    
-    if (postTaskName = "a") {
-        await ctx.render('index', {
-            title: 'All my Tasks:',
-            addTaskStatus: 'Ladies and Gentlemen, we got him',
-            user: 'true',
-            tasks: subject.IncompleteTasks
-        });
-    }
-};
-*/
 
 //Adding Task Form Functionality
-//Task has 6 elements: 
-//0. Task Title     1. Task Description     2. Task EXP
-//3. Reward Title   4. Reward Description   5. Task Due Date
 async function addTask(ctx) {
     const body = ctx.request.body;
     var postTaskTitle = body.taskTitle;
@@ -169,15 +151,24 @@ async function addTask(ctx) {
     subject.UnearnedRewards.push(rewardObj);
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject);
-
+    
+    //Checking if the task that was just added has already expired
+    var taskExpiredBoolInitial = TaskExpiredCheck();
+    console.log(taskExpiredBoolInitial);
+    if (taskExpiredBoolInitial == true) {
+        ctx.redirect('/');}   
+    
+    //Checking if character has already been created
+    var charCreated = true;
+    if (subject.Character === undefined || subject.Character.length == 0) {
+        charCreated = false;}
+    
     await ctx.render('index', {
         title: "Tasks",
-        userCreated: true,
+        userCreated: charCreated,
         tasks: subject.IncompleteTasks
     });
-
     //ctx.redirect('/');
-
 };
 
 async function showTaskDetails(ctx) {
@@ -342,7 +333,7 @@ async function showReward(ctx) {
     });
 };
 
-    //Reset Everything except character
+    //Reset Everything 
 async function reset(ctx) {
     
     //Reset all Tasks and Rewards
@@ -353,11 +344,29 @@ async function reset(ctx) {
     let subject = JSON.parse(rawdata);
     var charCreated = false;
     
-    await ctx.render('index', {
-        title: "Tasks",
-        userCreated: charCreated,
-        tasks: subject.IncompleteTasks
-    });
+    ctx.redirect('/');
+};
+
+//Backend Functionality for Create Character Modal
+async function createChar(ctx) {
+    const body = ctx.request.body;
+    var postCharName = body.charName;
+    console.log(postCharName);
+        
+    //Read test.json and add Character Object (with user's inputted name) into JSON
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+    
+    var charObj = {};
+    charObj["Name"] = postCharName;
+    
+    subject.Character.push(charObj);
+    
+    let newSubject = JSON.stringify(subject, null, 4);
+    fs.writeFileSync('test.json', newSubject);
+    
+    //Redirect to Homepage
+    ctx.redirect('/');
 };
 
 

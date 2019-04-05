@@ -19,13 +19,20 @@
             <div class="modal-header">
                 <h4 class="modal-title">Welcome</h4>
             </div>
-            <div class="modal-body">
-                <p>Please type your name</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="/reset" class="btn btn-danger btn-lg">Reset</a>
-            </div>
+                <!-- Start of Form -->
+                <form action="/charCreate" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="TaskTitle">Please enter your name</label>
+                            <input type="text" class="form-control" name="charName" id="CharName">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                            <input type="submit" value="Save" class="btn btn-dark btn-lg">
+                    </div>
+                </form>
+                <!-- End of Form -->  
         </div>
     </div>
 </div>

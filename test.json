@@ -1,29 +1,17 @@
 {
     "IncompleteTasks": [],
     "CompleteTasks": [],
-    "FailedTasks": [
-        {
-            "TaskID": 1,
-            "TaskTitle": "First Task",
-            "TaskDescription": "First Task Description",
-            "TaskEXP": "10",
-            "TaskRewardTitle": "Reward 1",
-            "TaskRewardDescription": "Reward 1 Description",
-            "TaskDueDate": "2000/10/09"
-        }
-    ],
+    "FailedTasks": [],
     "UnearnedRewards": [],
     "EarnedRewards": [],
     "ClaimedRewards": [],
-    "FailedRewards": [
+    "FailedRewards": [],
+    "Character": [
         {
-            "RewardID": 1,
-            "RewardTitle": "Reward 1",
-            "RewardDescription": "Reward 1 Description"
+            "Name": "Aaron"
         }
     ],
-    "Character": [],
     "TaskNumber": 0,
-    "TaskIDCounter": 1,
-    "RewardIDCounter": 1
+    "TaskIDCounter": 0,
+    "RewardIDCounter": 0
 }
