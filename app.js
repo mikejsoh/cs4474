@@ -108,23 +108,46 @@ async function index(ctx){
     // Finds all tasks due today
     var todayDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
     var todayTasks = subject.IncompleteTasks.filter(function (task) {
-        // console.log("task.TaskDueDate: " + task.TaskDueDate);
         var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "2000/01/20"
-        var taskDate = new Date(parseInt(taskDateArray[0], 10), parseInt(taskDateArray[1], 10) - 1, parseInt(taskDateArray[2], 10))
-
+        var taskDate = new Date(parseInt(taskDateArray[0], 10), parseInt(taskDateArray[1], 10) - 1, parseInt(taskDateArray[2], 10));
+        
         return taskDate.getTime() == todayDate.getTime();
     });
     
-    // console.log(todayTasks);
+    // Finds all tasks due in the next 3 days
+    var nextThreeDaysTasks = subject.IncompleteTasks.filter(function (task) {
+        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "2000/01/20"
+        var taskDate = new Date(parseInt(taskDateArray[0], 10), parseInt(taskDateArray[1], 10) - 1, parseInt(taskDateArray[2], 10));
+        var next3DaysDate = addDays(todayDate,3);
+
+        return (taskDate.getTime() > todayDate.getTime()) && (taskDate.getTime() <= next3DaysDate);
+    });
+
+    // Finds all other remaining tasks
+    var allOtherTasks = subject.IncompleteTasks.filter(function (task) {
+        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "2000/01/20"
+        var taskDate = new Date(parseInt(taskDateArray[0], 10), parseInt(taskDateArray[1], 10) - 1, parseInt(taskDateArray[2], 10));
+        var next3DaysDate = addDays(todayDate,3);
+
+        return taskDate.getTime() > next3DaysDate;
+    });
     
+    // Render index page
     await ctx.render('index', {
         title: "Tasks",
         userCreated: charCreated,
         incompleteTasks: subject.IncompleteTasks,
-        todayTasks: todayTasks
+        todayTasks: todayTasks,
+        nextThreeDaysTasks: nextThreeDaysTasks,
+        allOtherTasks: allOtherTasks
     }); 
 };
 
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
 
 //Adding Task Form Functionality
 async function addTask(ctx) {
@@ -177,12 +200,12 @@ async function addTask(ctx) {
     if (subject.Character === undefined || subject.Character.length == 0) {
         charCreated = false;}
     
-    await ctx.render('index', {
-        title: "Tasks",
-        userCreated: charCreated,
-        incompleteTasks: subject.IncompleteTasks
-    });
-    //ctx.redirect('/');
+    // await ctx.render('index', {
+    //     title: "Tasks",
+    //     userCreated: charCreated,
+    //     incompleteTasks: subject.IncompleteTasks
+    // });
+    ctx.redirect('/');
 };
 
 async function showTaskDetails(ctx) {
