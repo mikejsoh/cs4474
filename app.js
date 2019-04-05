@@ -29,8 +29,7 @@ koaEjs(app, {
 //Functions
 //Task Due Date Expired Check
 
-var minutes = 1, the_interval = minutes * 60 * 1000;
-setInterval(function() {
+function TaskExpiredCheck() {
     console.log("I am doing my 1 minutes check");
     var now = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate())
     
@@ -39,6 +38,8 @@ setInterval(function() {
     
     var listOfTasks = subject.IncompleteTasks;
     var arrayLength = listOfTasks.length;
+    
+    var taskExpired = false;
     
     for (var i = 0; i < subject.IncompleteTasks.length; i++) {
         var inputTask = subject.IncompleteTasks[i]; 
@@ -49,7 +50,7 @@ setInterval(function() {
         var reward_description = inputTask["TaskRewardDescription"] //Obtain Task's Reward Description
         if (inputDate < now) { //InputDate is in the past
             console.log("Date is in the past");
-            
+            taskExpired = true;
             subject.IncompleteTasks.splice(i,1); //remove from incomplete tasks
             subject.FailedTasks.push(inputTask); //push onto failed tasks
             
@@ -69,8 +70,8 @@ setInterval(function() {
     
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject); 
-    
-}, the_interval);
+    return taskExpired;
+}
 
 //Route mapping 
 router.get('/', index);
@@ -98,11 +99,19 @@ async function index(ctx){
         charCreated = false;
     }
     
+    //Checking if any tasks have expired
+    var taskExpiredBoolInitial = TaskExpiredCheck();
+    console.log(taskExpiredBoolInitial);
+    if (taskExpiredBoolInitial == true) {
+        console.log("Inside task expired loop");
+        ctx.redirect('/');
+    }   
+    
     await ctx.render('index', {
         title: "Tasks",
         userCreated: charCreated,
         tasks: subject.IncompleteTasks
-    });
+    }); 
 };
 
 /*
@@ -166,6 +175,14 @@ async function addTask(ctx) {
     subject.UnearnedRewards.push(rewardObj);
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject);
+    
+    //Checking if the task that was just added has already expired
+    var taskExpiredBoolInitial = TaskExpiredCheck();
+    console.log(taskExpiredBoolInitial);
+    if (taskExpiredBoolInitial == true) {
+        console.log("Inside task expired loop");
+        ctx.redirect('/');
+    }   
 
     await ctx.render('index', {
         title: "Tasks",
