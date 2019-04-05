@@ -305,6 +305,9 @@ async function createChar(ctx) {
     
     var charObj = {};
     charObj["Name"] = postCharName;
+    charObj["HP"] = 10;
+    charObj["EXP"] = 0;
+    charObj["Level"] = 1;
     
     subject.Character.push(charObj);
     
