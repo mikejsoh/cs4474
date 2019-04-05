@@ -32,7 +32,7 @@ koaEjs(app, {
 var minutes = 1, the_interval = minutes * 60 * 1000;
 setInterval(function() {
     console.log("I am doing my 1 minutes check");
-    var now = new Date();
+    var now = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate())
     
     let rawdata = fs.readFileSync('test.json');
     let subject = JSON.parse(rawdata);
@@ -69,6 +69,7 @@ setInterval(function() {
     
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject); 
+    
 }, the_interval);
 
 //Route mapping 
