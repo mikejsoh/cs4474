@@ -7,20 +7,6 @@ const path = require('path');
 const fs = require('fs');
 const bodyParser = require('koa-bodyparser');
 
-//Reading a file
-let rawdata = fs.readFileSync('test.json');
-let subject = JSON.parse(rawdata);
-console.log(subject);
-
-//Appending to a JSON file 
-    //*Keeps appending so commented out*
-/*
-subject.tasks.push({name:"migos", age:70});
-let newSubject = JSON.stringify(subject);
-fs.writeFileSync('test.json', newSubject);
-*/
-
-
 //initialize app as instance of koa 
 const app = new koa();
 //initialize router 
@@ -41,30 +27,49 @@ koaEjs(app, {
 });
 
 //Functions
-    //Checking Date validity
-function isValidDate(inputDate) {
+//Task Due Date Expired Check
 
-    var date = new Date();
-    date.setFullYear(year, month - 1, day);
-    // month - 1 since the month index is 0-based (0 = January)
-
-    if ( (date.getFullYear() == year) && (date.getMonth() == month + 1) && (date.getDate() == day) )
-    return true;
-
-    return false;
-}
-
-    //Checking if Date is past current date
-function pastDueDate(inputDate) {
-
+var minutes = 1, the_interval = minutes * 60 * 1000;
+setInterval(function() {
+    console.log("I am doing my 1 minutes check");
     var now = new Date();
     
-    //Date is in the future
-    if (inputDate < now) {
-        return false;
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+    
+    var listOfTasks = subject.IncompleteTasks;
+    var arrayLength = listOfTasks.length;
+    
+    for (var i = 0; i < subject.IncompleteTasks.length; i++) {
+        var inputTask = subject.IncompleteTasks[i]; 
+        var inputString = inputTask["TaskDueDate"];
+        var inputArr = inputString.split("/"); //Assume date stored as string "2000/01/20"
+        var inputDate = new Date(parseInt(inputArr[0], 10), parseInt(inputArr[1], 10) - 1, parseInt(inputArr[2], 10))
+        
+        var reward_description = inputTask["TaskRewardDescription"] //Obtain Task's Reward Description
+        if (inputDate < now) { //InputDate is in the past
+            console.log("Date is in the past");
+            
+            subject.IncompleteTasks.splice(i,1); //remove from incomplete tasks
+            subject.FailedTasks.push(inputTask); //push onto failed tasks
+            
+            const rewardIndex = subject.UnearnedRewards.findIndex(x => x.RewardDescription == reward_description);
+            let reward = subject.UnearnedRewards[rewardIndex];
+
+              
+            subject.UnearnedRewards.splice(rewardIndex, 1);   //remove from unearned rewards
+            subject.FailedRewards.push(reward); //push onto failed rewards
+            
+            i--; //Since the index that was just removed was the current one, need to check the same index in the next iteration of loop
+             
+            if (subject.IncompleteTasks.length == 0) {//If Task list is now empty after removal of a task
+                break;}
+        }
     }
-    return false;
-}
+    
+    let newSubject = JSON.stringify(subject, null, 4);
+    fs.writeFileSync('test.json', newSubject); 
+}, the_interval);
 
 //Route mapping 
 router.get('/', index);
