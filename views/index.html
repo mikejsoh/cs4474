@@ -38,8 +38,7 @@
 -->
 
 <!-- Reset Button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#resetModal">Reset Tasks and
-    Rewards</button>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#resetModal">Reset Tasks and Rewards</button>
 
 <!-- Reset Modal -->
 <div id="resetModal" class="modal fade" role="dialog">
@@ -62,103 +61,110 @@
     </div>
 </div>
 
-<div class="container">
-    <div>
-        <h2 class="d-inline-block align-middle">Tasks</h2>
 
-        <!-- + Button to add task -->
-        <button type="button" class="btn btn-primary fas fa-plus float-right" data-toggle="modal"
-            data-target="#addTaskModal">
-        </button>
-    </div>
+<div>
+    <h1 class="d-inline-block align-middle">Tasks</h1>
 
-    <!-- Add Task Modal-->
-    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addTaskModalLabel">Create New Task</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <!-- Start of Form -->
-                <form action="/" method="POST">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="TaskTitle">Task Title</label>
-                            <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
-                        </div>
-                        <div class="form-group">
-                            <label for="TaskDescription">Task Description</label>
-                            <textarea class="form-control" id="TaskDescription" name="taskDescription" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="EXP">EXP</label>
-                            <input type="text" class="form-control" name="taskEXP" id="exp">
-                        </div>
-                        <div class="form-group">
-                            <label for="Reward">Reward Title</label>
-                            <input type="text" class="form-control" name="taskRewardTitle" id="reward">
-                        </div>
-                        <div class="form-group">
-                            <label for="RewardDescription">Reward Description</label>
-                            <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="DueDate">Due Date</label>
-                            <input type="text" class="form-control" id="TaskDueDate" name="taskDueDate">
-                        </div>
-                    </div>
+    <!-- + Button to add task -->
+    <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+        data-target="#addTaskModal">Add Task
+    </button>
+</div>
 
-                    <div class="modal-footer">
-                            <!-- <a href="/" class="btn btn-danger btn-lg">Cancel</a> -->
-                            <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Cancel</button>
-                            <input type="submit" value="Add Task" class="btn btn-dark btn-lg">
-                    </div>
-                </form>
-                <!-- End of Form -->  
+<!-- Add Task Modal-->
+<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTaskModalLabel">Create New Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <!-- Start of Form -->
+            <form action="/" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="TaskTitle">Task Title</label>
+                        <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="TaskDescription">Task Description</label>
+                        <textarea class="form-control" id="TaskDescription" name="taskDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="EXP">EXP</label>
+                        <input type="text" class="form-control" name="taskEXP" id="exp">
+                    </div>
+                    <div class="form-group">
+                        <label for="Reward">Reward Title</label>
+                        <input type="text" class="form-control" name="taskRewardTitle" id="reward">
+                    </div>
+                    <div class="form-group">
+                        <label for="RewardDescription">Reward Description</label>
+                        <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="DueDate">Due Date</label>
+                        <input type="text" class="form-control" id="TaskDueDate" name="taskDueDate">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Cancel</button>
+                        <input type="submit" value="Add Task" class="btn btn-dark btn-lg">
+                </div>
+            </form>
+            <!-- End of Form -->  
         </div>
     </div>
-    <!-- End of Add Task Modal -->
-
-    <!-- Start of Task List -->
-    <ul class="list-group">
-        <% tasks.forEach( function(task) { %>
-
-        <li href="" class="list-group-item list-group-item-action" role="tab" id=<%= task.TaskID %></li>
-        <div class="row align-items-center">
-            <div class="col-4">
-                <a href="/task/<%= task.TaskID %>"> Task Name: <%= task.TaskTitle %></a>
-            </div>
-            <div class="col-4">
-                
-            </div>
-            <div class="col-4 text-right">
-                <button type="button" class="btn btn-default d-inline" aria-label="Left Align" data-toggle="modal" data-target="#editTaskModal<%= task.TaskID %>">
-                    <span class="far fa-edit fa-lg" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="btn btn-default d-inline" aria-label="Left Align" data-toggle="modal" data-target="#confirmDeleteModal<%= task.TaskID %>">
-                    <span class="fas fa-trash-alt fa-lg" aria-hidden="true"></span>
-                </button>
-                <form class="d-inline" action="/task/claim/<%= task.TaskID %>" method="POST">
-                    <input type="hidden">
-                    <button class="btn" type="submit"><i class="fas fa-check" aria-hidden="true"></i></button>
-                </form>
-            </div>
-            </div>
-
-        <!-- Start of Confirm Delete Modal -->
-        <% include partials/_confirmDeleteModal.html %>
-        <!-- End of Confirm Delete Modal -->
-
-        <!-- Start of Edit Task Modal -->
-        <% include partials/_editTaskModal.html %>
-        <!-- End of Edit Task Modal -->
-
-        <% }); %>
-    </ul>
-    <!-- End of Task List -->
 </div>
+<!-- End of Add Task Modal -->
+
+<!-- Start of Task List -->
+<div class="card shadow-sm">
+    <h5 class="card-header card-header-bg-dark mb-3">Tasks Due Today</h5>
+    <% tasks.forEach( function(task) { %>
+        <div class="card shadow-sm  border-success  mb-3 ml-3 mr-3">
+            <div class="card-body text-success">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="card-title"><%= task.TaskTitle %></h5>
+                        <h6 class="card-subtitle mb-2">EXP: <%= task.TaskEXP %></h6>
+                        <p class="card-text"><%= task.TaskDescription %></p>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button type="button" class="btn btn-default d-inline" aria-label="Left Align" data-toggle="modal" data-target="#editTaskModal<%= task.TaskID %>">
+                                    <span class="far fa-edit" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default d-inline" aria-label="Left Align" data-toggle="modal" data-target="#confirmDeleteModal<%= task.TaskID %>">
+                                    <span class="fas fa-trash-alt" aria-hidden="true"></span>
+                                </button>
+                                <form class="d-inline" action="/task/claim/<%= task.TaskID %>" method="POST">
+                                    <input type="hidden">
+                                    <button class="btn" type="submit"><i class="fas fa-check" aria-hidden="true"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 text-right">
+                                <i class="far fa-clock fa-lg d-inline text-muted p-2"></i><h6 class="card-subtitle text-muted d-inline "><%= task.TaskDueDate %></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Start of Confirm Delete Modal -->
+    <% include partials/_confirmDeleteModal.html %>
+    <!-- End of Confirm Delete Modal -->
+
+    <!-- Start of Edit Task Modal -->
+    <% include partials/_editTaskModal.html %>
+    <!-- End of Edit Task Modal -->
+    <% }); %>
+</div>
+<!-- End of Task List -->

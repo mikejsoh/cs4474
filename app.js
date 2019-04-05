@@ -181,6 +181,9 @@ async function addTask(ctx) {
 };
 
 async function showTaskDetails(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     const task_id = ctx.params.id;
     const task = subject.IncompleteTasks.find(x => x.TaskID == task_id);
 
@@ -191,6 +194,9 @@ async function showTaskDetails(ctx) {
 }
 
 async function editTaskDetails(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     const task_id = ctx.params.id;
     const task = subject.IncompleteTasks.find(x => x.TaskID == task_id);
 
@@ -201,6 +207,9 @@ async function editTaskDetails(ctx) {
 }
 
 async function updateTask(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     const body = ctx.request.body;
     const task_id = ctx.params.id;
     const task = subject.IncompleteTasks.find(x => x.TaskID == task_id);
@@ -245,6 +254,9 @@ var sortByProperty = function (property) {
 };
 
 async function claimReward(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+    
     const reward_id = ctx.params.id;
     const rewardIndex = subject.EarnedRewards.findIndex(x => x.RewardID == reward_id);
     let reward = subject.EarnedRewards[rewardIndex];
@@ -261,6 +273,9 @@ async function claimReward(ctx) {
 }
 
 async function claimTask(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     const task_id = ctx.params.id;
     const taskIndex = subject.IncompleteTasks.findIndex(x => x.TaskID == task_id);
     let task = subject.IncompleteTasks[taskIndex];
@@ -284,6 +299,9 @@ async function claimTask(ctx) {
 }
 
 async function deleteTask(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     const incompleteTasks = subject.IncompleteTasks;
     const unearnedRewards = subject.UnearnedRewards;
     const task_id = ctx.params.id;
@@ -300,6 +318,9 @@ async function deleteTask(ctx) {
 
 //Show Char.html
 async function showChar(ctx){
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+    
     await ctx.render('char', {
         title: "Character",
         completedTasks: subject.CompleteTasks,
@@ -310,6 +331,9 @@ async function showChar(ctx){
 	
 	//Show Reward.html
 async function showReward(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     await ctx.render('reward', {
         title: "Rewards",
         unearnedRewards: subject.UnearnedRewards,
