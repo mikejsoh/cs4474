@@ -1,0 +1,10 @@
+.list-group-item, .list-group-item:hover {
+    z-index: auto
+}
+.card-header-bg-dark {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.card-no-curve {
+    border-radius: 0rem;
+}

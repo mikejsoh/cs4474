@@ -6,6 +6,7 @@ const koaEjs = require('koa-ejs');
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('koa-bodyparser');
+const serve = require('koa-static');
 
 //initialize app as instance of koa 
 const app = new koa();
@@ -16,6 +17,8 @@ const router = new koaRouter();
 app.use(json());
 //BodyParser Middleware
 app.use(bodyParser());
+
+app.use(serve(__dirname + '/public'));
 
 //Ejs templating options, injects views into layout.html
 koaEjs(app, {
@@ -81,6 +84,7 @@ router.get('/task/edit/:id', editTaskDetails);  // Edit Task Form
 router.get('/task/:id', showTaskDetails);       // Task Details
 router.post('/task/:id', updateTask);           // Task Update Post Method
 router.get('/task/delete/:id', deleteTask);     // Task Delete Method
+router.post('/task/claim/:id', claimTask);       // Claim Task Method
 
 // Reward Routes
 router.post('/reward/claim/:id', claimReward);  // Claim Reward Method
@@ -98,12 +102,26 @@ async function index(ctx){
     var taskExpiredBoolInitial = TaskExpiredCheck();
     console.log(taskExpiredBoolInitial);
     if (taskExpiredBoolInitial == true) {
-        ctx.redirect('/');}   
+        ctx.redirect('/');
+    }
+
+    // Finds all tasks due today
+    var todayDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+    var todayTasks = subject.IncompleteTasks.filter(function (task) {
+        // console.log("task.TaskDueDate: " + task.TaskDueDate);
+        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "2000/01/20"
+        var taskDate = new Date(parseInt(taskDateArray[0], 10), parseInt(taskDateArray[1], 10) - 1, parseInt(taskDateArray[2], 10))
+
+        return taskDate.getTime() == todayDate.getTime();
+    });
+    
+    // console.log(todayTasks);
     
     await ctx.render('index', {
         title: "Tasks",
         userCreated: charCreated,
-        tasks: subject.IncompleteTasks
+        incompleteTasks: subject.IncompleteTasks,
+        todayTasks: todayTasks
     }); 
 };
 
@@ -162,12 +180,15 @@ async function addTask(ctx) {
     await ctx.render('index', {
         title: "Tasks",
         userCreated: charCreated,
-        tasks: subject.IncompleteTasks
+        incompleteTasks: subject.IncompleteTasks
     });
     //ctx.redirect('/');
 };
 
 async function showTaskDetails(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     const task_id = ctx.params.id;
     const task = subject.IncompleteTasks.find(x => x.TaskID == task_id);
 
@@ -178,6 +199,9 @@ async function showTaskDetails(ctx) {
 }
 
 async function editTaskDetails(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     const task_id = ctx.params.id;
     const task = subject.IncompleteTasks.find(x => x.TaskID == task_id);
 
@@ -188,6 +212,9 @@ async function editTaskDetails(ctx) {
 }
 
 async function updateTask(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     const body = ctx.request.body;
     const task_id = ctx.params.id;
     const task = subject.IncompleteTasks.find(x => x.TaskID == task_id);
@@ -232,6 +259,9 @@ var sortByProperty = function (property) {
 };
 
 async function claimReward(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+    
     const reward_id = ctx.params.id;
     const rewardIndex = subject.EarnedRewards.findIndex(x => x.RewardID == reward_id);
     let reward = subject.EarnedRewards[rewardIndex];
@@ -247,7 +277,36 @@ async function claimReward(ctx) {
     ctx.redirect('/reward');
 }
 
+async function claimTask(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
+    const task_id = ctx.params.id;
+    const taskIndex = subject.IncompleteTasks.findIndex(x => x.TaskID == task_id);
+    let task = subject.IncompleteTasks[taskIndex];
+
+    // Task and Reward 1:1 relationship so ID's will be the same
+    const rewardIndex = subject.UnearnedRewards.findIndex(reward => reward.RewardID == task_id);
+    let reward = subject.UnearnedRewards[rewardIndex];
+
+    // Move Task from IncompleteTask[] to CompleteTask[]
+    subject.CompleteTasks.push(task);
+    subject.IncompleteTasks.splice(taskIndex, 1);
+
+    // Move Reward from UnearnedRewards[] to EarnedRewards[]
+    subject.EarnedRewards.push(reward);
+    subject.UnearnedRewards.splice(rewardIndex, 1);
+
+    let newSubject = JSON.stringify(subject, null, 4);
+    fs.writeFileSync('test.json', newSubject);
+
+    ctx.redirect('/');
+}
+
 async function deleteTask(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     const incompleteTasks = subject.IncompleteTasks;
     const unearnedRewards = subject.UnearnedRewards;
     const task_id = ctx.params.id;
@@ -264,13 +323,22 @@ async function deleteTask(ctx) {
 
 //Show Char.html
 async function showChar(ctx){
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+    
     await ctx.render('char', {
-        title: "Character"
+        title: "Character",
+        completedTasks: subject.CompleteTasks,
+        claimedRewards: subject.ClaimedRewards,
+        missedTasks: subject.FailedTasks
     });
 };	
 	
 	//Show Reward.html
 async function showReward(ctx) {
+    let rawdata = fs.readFileSync('test.json');
+    let subject = JSON.parse(rawdata);
+
     await ctx.render('reward', {
         title: "Rewards",
         unearnedRewards: subject.UnearnedRewards,

@@ -1,4 +1,4 @@
-<div class="modal fade" id="confirmDeleteModal<%= task.TaskID %>" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModal" aria-hidden="true">
+<div class="modal fade" id="confirmDeleteModal<%= todayTask.TaskID %>" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No Thanks</button>
-                <a href="/task/delete/<%= task.TaskID %>" class="btn btn-danger" role="button">Delete Task</a>
+                <a href="/task/delete/<%= todayTask.TaskID %>" class="btn btn-danger" role="button">Delete Task</a>
             </div>
         </div>
     </div>

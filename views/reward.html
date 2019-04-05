@@ -2,51 +2,58 @@
 
 <!-- Start of Unearned Reward List -->
 <% if (unearnedRewards.length > 0) { %>
-<div class="container">
-    <h4>In Progress Rewards</h4>
-    <ul class="list-group">
-        <% unearnedRewards.forEach( function(unearnedReward) { %>
-        <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
-            <%= unearnedReward.RewardTitle %>
-        </li>
-        <% }); %>
-    </ul>
+<div class="card shadow-sm">
+    <h5 class="card-header card-header-bg-dark mb-3">Pending Rewards</h5>
+    <% unearnedRewards.forEach( function(unearnedReward) { %>
+        <div class="card shadow-sm  mb-3 ml-3 mr-3">
+            <div class="card-body">
+                <h5 class="card-title"><%= unearnedReward.RewardTitle %></h5>
+                <p class="card-text"><%= unearnedReward.RewardDescription %></p>
+            </div>
+        </div>
+    <% }); %>
 </div>
 <% } %>
 <!-- End of Unearned Reward List -->
 
 <!-- Start of Earned Reward List -->
 <% if (earnedRewards.length > 0) { %>
-<div class="container mt-5">
-    <h4>Earned Rewards</h4>
-    <ul class="list-group">
-        <% earnedRewards.forEach( function(earnedReward) { %>
-        <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
-            Reward Title: <%= earnedReward.RewardTitle %>
-            <div class="pull-right action-buttons ">
-                <form action="/reward/claim/<%= earnedReward.RewardID %>" method="POST">
-                    <input type="submit" value="Claim" class="btn btn-success">
-                </form>
-
+<div class="card shadow-sm mt-5">
+    <h5 class="card-header card-header-bg-dark mb-3">Earned Rewards</h5>
+    <% earnedRewards.forEach( function(earnedReward) { %>
+        <div class="card shadow-sm mb-3 ml-3 mr-3">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h5 class="card-title"><%= earnedReward.RewardTitle %></h5>
+                        <p class="card-text"><%= earnedReward.RewardDescription %></p>
+                    </div>
+                    <div class="col-4 text-right ">
+                        <form action="/reward/claim/<%= earnedReward.RewardID %>" method="POST">
+                            <input type="submit" value="Claim" class="btn btn-success">
+                        </form>
+                    </div>
+                </div>
+               
             </div>
-        </li>
-        <% }); %>
-    </ul>
+        </div>
+    <% }); %>
 </div>
 <% } %>
 <!-- End of Earned Reward List -->
 
 <!-- Start of Claimed Reward List -->
 <% if (claimedRewards.length > 0) { %>
-<div class="container mt-5">
-    <h4>Claimed Rewards</h4>
-    <ul class="list-group">
-        <% claimedRewards.forEach( function(claimedReward) { %>
-        <li class="list-group-item d-flex justify-content-between align-items-center" role="tab">
-            <%= claimedReward.RewardTitle %> (ID: <%= claimedReward.RewardID %>)
-        </li>
-        <% }); %>
-    </ul>
+<div class="card shadow-sm mt-5">
+    <h5 class="card-header card-header-bg-dark mb-3">Claimed Rewards</h5>
+    <% claimedRewards.forEach( function(claimedReward) { %>
+        <div class="card shadow-sm mb-3 ml-3 mr-3">
+            <div class="card-body">
+                <h5 class="card-title"><%= claimedReward.RewardTitle %></h5>
+                <p class="card-text"><%= claimedReward.RewardDescription %></p>
+            </div>
+        </div>
+    <% }); %>
 </div>
 <% } %>
 <!-- End of Claimed Reward List -->
