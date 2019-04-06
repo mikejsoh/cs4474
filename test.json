@@ -1,13 +1,35 @@
 {
-    "IncompleteTasks": [],
+    "IncompleteTasks": [
+        {
+            "TaskID": 1,
+            "TaskTitle": "a",
+            "TaskDescription": "A",
+            "TaskEXP": "50",
+            "TaskRewardTitle": "A",
+            "TaskRewardDescription": "A",
+            "TaskDueDate": "2019/05/01"
+        }
+    ],
     "CompleteTasks": [],
     "FailedTasks": [],
-    "UnearnedRewards": [],
+    "UnearnedRewards": [
+        {
+            "RewardID": 1,
+            "RewardTitle": "A",
+            "RewardDescription": "A"
+        }
+    ],
     "EarnedRewards": [],
     "ClaimedRewards": [],
     "FailedRewards": [],
-    "Character": {},
+    "Character": {
+        "Name": "Aaron",
+        "HP": 100,
+        "EXP": 0,
+        "Level": 1,
+        "Image": "level1.png"
+    },
     "TaskNumber": 0,
-    "TaskIDCounter": 0,
-    "RewardIDCounter": 0
+    "TaskIDCounter": 1,
+    "RewardIDCounter": 1
 }

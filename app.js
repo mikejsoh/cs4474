@@ -295,6 +295,13 @@ async function claimTask(ctx) {
     
     // Gaining EXP based on the Task's EXP Value
     subject.Character["EXP"] = subject.Character["EXP"] + task["TaskEXP"];
+    
+    //Check if Leveled UP; if leveled up change EXP and HP
+    if (subject.Character["EXP"] >= (10 + 20 * subject.Character["Level"])) {
+        subject.Character["Level"] += 1;
+        subject.Character["EXP"] = 0;
+        subject.Character["HP"] = 100 - (10 * subject.Character["Level"]);
+    }
 
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject);
