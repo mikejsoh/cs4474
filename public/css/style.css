@@ -18,6 +18,35 @@ body {
     margin-bottom: 60px; /* Margin bottom by footer height */
 }
 
+
+
+.text-date {
+    font-size: 0.85rem;
+}
+
+
+/* COLOURS */
+/* Red Colour */
+.border-red { border-color:#e74a3b; }
+.text-red { color: #e74a3b; }
+.bg-red {background-color: #e74a3b}
+
+/* Yellow */
+.border-yellow { border-color:#f6c23e; }  /* #dda20a */
+.text-yellow { color: #f6c23e; }
+.bg-yellow {background-color: #f6c23e}
+
+/* Blue */
+.border-blue {border-color: #4e73df }
+.text-blue {color: #4e73df }
+.bg-blue {background-color: #4e73df}
+
+/* Green Colour */
+.border-green { border-color:#34bb8b; } /* #1cc88a */
+.text-green { color: #34bb8b; }
+.bg-green {background-color: #34bb8b}
+
+
 .footer {
     position: absolute;
     bottom: 0;

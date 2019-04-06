@@ -1,12 +1,12 @@
 <div class="card">
     <h5 class="card-header card-header-bg-dark mb-3">Tasks Due Today</h5>
     <% todayTasks.forEach( function(todayTask) { %>
-    <div class="card shadow-sm  border-success  mb-3 ml-3 mr-3">
-        <div class="card-body text-success">
+    <div class="card shadow  mb-3 ml-3 mr-3">
+        <div class="card-body">
             <div class="row">
                 <div class="col-8">
                     <h5 class="card-title"><%= todayTask.TaskTitle %></h5>
-                    <h6 class="card-subtitle mb-2">EXP: <%= todayTask.TaskEXP %></h6>
+                    <h6 class="card-subtitle mb-2" exp="<%= todayTask.TaskEXP %>">EXP: <%= todayTask.TaskEXP %></h6>
                     <p class="card-text"><%= todayTask.TaskDescription %></p>
                 </div>
                 <div class="col-4">
@@ -14,23 +14,23 @@
                         <div class="col-12 text-right">
                             <button type="button" class="btn btn-default d-inline" aria-label="Left Align"
                                 data-toggle="modal" data-target="#editTaskModal<%= todayTask.TaskID %>">
-                                <span class="far fa-edit" aria-hidden="true"></span>
+                                <span class="far fa-edit text-white" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit Task"></span>
                             </button>
                             <button type="button" class="btn btn-default d-inline" aria-label="Left Align"
                                 data-toggle="modal" data-target="#confirmDeleteModal<%= todayTask.TaskID %>">
-                                <span class="fas fa-trash-alt" aria-hidden="true"></span>
+                                <span class="fas fa-trash-alt text-white" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete Task"></span>
                             </button>
                             <form class="d-inline" action="/task/claim/<%= todayTask.TaskID %>" method="POST">
                                 <input type="hidden">
-                                <button class="btn" type="submit"><i class="fas fa-check"
-                                        aria-hidden="true"></i></button>
+                                <button class="btn" type="submit"><i class="fas fa-check text-white"
+                                        aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Claim Task"></i></button>
                             </form>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-12 text-right">
-                            <i class="far fa-clock fa-lg d-inline text-muted p-2"></i>
-                            <h6 class="card-subtitle text-muted d-inline "><%= todayTask.TaskDueDate %></h6>
+                            <i class="far fa-clock fa-lg d-inline p-2 text-white"></i>
+                            <h6 class="card-subtitle d-inline text-date text-white"><%= todayTask.TaskDueDate %></h6>
                         </div>
                     </div>
                 </div>

@@ -140,3 +140,34 @@
 <!-- Start of All Other Tasks List -->
 <% include partials/_TasksDueOtherList.html %>
 <!-- End of All Other Tasks Days List -->
+
+<script type="text/javascript">
+    $.fn.setClass = function(classes) {
+        this.attr('class', classes);
+        return this;
+    };
+
+    jQuery(document).ready( function() {
+        $(".card .card .card-body .row .col-8 .card-subtitle").each(function() {
+            var expValue = $(this).attr('exp')
+
+            if (expValue == 50) {
+                $(this).parent().parent().parent().parent().addClass("border-red");
+                $(this).parent().parent().parent().addClass("bg-red text-white");
+            } else if (expValue == 40) {
+                $(this).parent().parent().parent().parent().addClass("border-yellow");
+                $(this).parent().parent().parent().addClass("bg-yellow text-white");
+            } else if (expValue == 30) {
+                $(this).parent().parent().parent().parent().addClass("border-blue");
+                $(this).parent().parent().parent().addClass("bg-blue text-white");
+            } else if (expValue == 20) {
+                $(this).parent().parent().parent().parent().addClass("border-green");
+                $(this).parent().parent().parent().addClass("bg-green text-white");
+            } else {
+                $(this).parent().parent().parent().parent().addClass("border-dark");
+                $(this).parent().parent().parent().addClass("bg-dark text-white");
+            }
+        });
+    } );
+
+</script>
