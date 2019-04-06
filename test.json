@@ -6,11 +6,7 @@
     "EarnedRewards": [],
     "ClaimedRewards": [],
     "FailedRewards": [],
-    "Character": [
-        {
-            "Name": "Aaron"
-        }
-    ],
+    "Character": {},
     "TaskNumber": 0,
     "TaskIDCounter": 0,
     "RewardIDCounter": 0

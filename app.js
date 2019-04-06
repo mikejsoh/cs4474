@@ -49,6 +49,7 @@ function TaskExpiredCheck() {
         var reward_description = inputTask["TaskRewardDescription"] //Obtain Task's Reward Description
         if (inputDate < now) { //InputDate is in the past
             taskExpired = true;
+            subject.Character["HP"] = subject.Character["HP"] - inputTask["TaskEXP"]; //Take away HP value based on EXP value
             subject.IncompleteTasks.splice(i,1); //remove from incomplete tasks
             subject.FailedTasks.push(inputTask); //push onto failed tasks
             
@@ -76,6 +77,7 @@ router.post('/', addTask);
 router.get('/char', showChar);
 router.get('/reward', showReward);
 router.get('/reset', reset);
+router.get('/gameOver', showGameOver);
 
 router.post('/charCreate', createChar);
 
@@ -92,18 +94,28 @@ router.post('/reward/claim/:id', claimReward);  // Claim Reward Method
 
 	//Show Index.html
 async function index(ctx){
-    let rawdata = fs.readFileSync('test.json');
-    let subject = JSON.parse(rawdata);
+    var rawdata = fs.readFileSync('test.json');
+    var subject = JSON.parse(rawdata);
     var charCreated = true;
-    if (subject.Character === undefined || subject.Character.length == 0) {
+    
+    //Check if a Character object is empty
+    if (Object.entries(subject.Character).length === 0 && subject.Character.constructor === Object) {
         charCreated = false;}
     
     //Checking if any tasks have expired
     var taskExpiredBoolInitial = TaskExpiredCheck();
-    console.log(taskExpiredBoolInitial);
-    if (taskExpiredBoolInitial == true) {
-        ctx.redirect('/');
+    if (taskExpiredBoolInitial === true) {
+        //Reload the JSON object data after TaskExpiredCheck() has modified it. 
+        rawdata = fs.readFileSync('test.json');
+        subject = JSON.parse(rawdata);
+        
+        if (subject.Character["HP"] > 0 ) {//If HP Value greater than 0, can keep playing the game
+            ctx.redirect('/');} //Need to redirect because need to reload/update the subject object after changes 
+        else { //If HP Value equal or is less than 0, alert player and do a reset
+            ctx.redirect('/gameOver');
+        }
     }
+    
 
     // Finds all tasks due today
     var todayDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
@@ -165,24 +177,8 @@ async function addTask(ctx) {
     subject.UnearnedRewards.push(rewardObj);
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject);
-    
-    //Checking if the task that was just added has already expired
-    var taskExpiredBoolInitial = TaskExpiredCheck();
-    console.log(taskExpiredBoolInitial);
-    if (taskExpiredBoolInitial == true) {
-        ctx.redirect('/');}   
-    
-    //Checking if character has already been created
-    var charCreated = true;
-    if (subject.Character === undefined || subject.Character.length == 0) {
-        charCreated = false;}
-    
-    await ctx.render('index', {
-        title: "Tasks",
-        userCreated: charCreated,
-        incompleteTasks: subject.IncompleteTasks
-    });
-    //ctx.redirect('/');
+
+    ctx.redirect('/');
 };
 
 async function showTaskDetails(ctx) {
@@ -296,6 +292,9 @@ async function claimTask(ctx) {
     // Move Reward from UnearnedRewards[] to EarnedRewards[]
     subject.EarnedRewards.push(reward);
     subject.UnearnedRewards.splice(rewardIndex, 1);
+    
+    // Gaining EXP based on the Task's EXP Value
+    subject.Character["EXP"] = subject.Character["EXP"] + task["TaskEXP"];
 
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject);
@@ -346,18 +345,17 @@ async function showReward(ctx) {
         claimedRewards: subject.ClaimedRewards
     });
 };
+    //Show GameOver
+async function showGameOver(ctx) {
+    await ctx.render('gameOver', {});
+};
 
     //Reset Everything 
 async function reset(ctx) {
     
     //Reset all Tasks and Rewards
-    fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":[],"TaskNumber":0, "TaskIDCounter": 0, "RewardIDCounter": 0}, null, 4));
-    
-    //Just re-render index
-    let rawdata = fs.readFileSync('test.json');
-    let subject = JSON.parse(rawdata);
-    var charCreated = false;
-    
+    fs.writeFileSync('test.json', JSON.stringify({"IncompleteTasks":[],"CompleteTasks":[],"FailedTasks":[],"UnearnedRewards":[],"EarnedRewards":[],"ClaimedRewards":[],"FailedRewards":[],"Character":{},"TaskNumber":0, "TaskIDCounter": 0, "RewardIDCounter": 0}, null, 4));
+        
     ctx.redirect('/');
 };
 
@@ -365,7 +363,6 @@ async function reset(ctx) {
 async function createChar(ctx) {
     const body = ctx.request.body;
     var postCharName = body.charName;
-    console.log(postCharName);
         
     //Read test.json and add Character Object (with user's inputted name) into JSON
     let rawdata = fs.readFileSync('test.json');
@@ -373,11 +370,12 @@ async function createChar(ctx) {
     
     var charObj = {};
     charObj["Name"] = postCharName;
-    charObj["HP"] = 10;
+    charObj["HP"] = 100;
     charObj["EXP"] = 0;
     charObj["Level"] = 1;
+    charObj["Image"] = "level" + charObj["Level"] + ".png";
     
-    subject.Character.push(charObj);
+    subject.Character = charObj;
     
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject);
