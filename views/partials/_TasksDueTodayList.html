@@ -1,0 +1,48 @@
+<div class="card">
+    <h5 class="card-header card-header-bg-dark mb-3">Tasks Due Today</h5>
+    <% todayTasks.forEach( function(todayTask) { %>
+    <div class="card shadow-sm  border-success  mb-3 ml-3 mr-3">
+        <div class="card-body text-success">
+            <div class="row">
+                <div class="col-8">
+                    <h5 class="card-title"><%= todayTask.TaskTitle %></h5>
+                    <h6 class="card-subtitle mb-2">EXP: <%= todayTask.TaskEXP %></h6>
+                    <p class="card-text"><%= todayTask.TaskDescription %></p>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button type="button" class="btn btn-default d-inline" aria-label="Left Align"
+                                data-toggle="modal" data-target="#editTaskModal<%= todayTask.TaskID %>">
+                                <span class="far fa-edit" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default d-inline" aria-label="Left Align"
+                                data-toggle="modal" data-target="#confirmDeleteModal<%= todayTask.TaskID %>">
+                                <span class="fas fa-trash-alt" aria-hidden="true"></span>
+                            </button>
+                            <form class="d-inline" action="/task/claim/<%= todayTask.TaskID %>" method="POST">
+                                <input type="hidden">
+                                <button class="btn" type="submit"><i class="fas fa-check"
+                                        aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12 text-right">
+                            <i class="far fa-clock fa-lg d-inline text-muted p-2"></i>
+                            <h6 class="card-subtitle text-muted d-inline "><%= todayTask.TaskDueDate %></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Start of Confirm Delete Modal -->
+    <% include _confirmTasksDueTodayDeleteModal.html %>
+    <!-- End of Confirm Delete Modal -->
+
+    <!-- Start of Edit Task Modal -->
+    <% include _editTasksDueTodayModal.html %>
+    <!-- End of Edit Task Modal -->
+    <% }); %>
+</div>
