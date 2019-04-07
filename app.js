@@ -51,7 +51,8 @@ router.get('/', index);
 router.post('/', addTask);
 router.post('/edit', updateTask);
 router.post('/delete', deleteTask);
-router.get('/db', ctx => (ctx.body = JSON.stringify(Array.from(tasks))));
+router.post('/complete', completeTask);
+
 
 //function to render the index page 
 async function index(ctx) {
@@ -109,6 +110,7 @@ async function updateTask(ctx){
         task.setExp(body.editExp);
         task.setReward(body.editReward);
         task.setDueDate(body.editDueDate);
+        tasks.set(body.editTaskName, task);
     }
     ctx.redirect('/');
 }
@@ -129,6 +131,35 @@ async function deleteTask(ctx){
     ctx.redirect('/');
 }
 
+//function to complete tasks // have to add character consequences here 
+async function completeTask(ctx){
+    const body = ctx.request.body;
+    console.log('Here in complete');
+    console.log('task name is' + body.completeTaskName);
+    if(tasks.has(body.completeTaskName))
+    {
+        var task = tasks.get(body.completeTaskName);
+        if(task.isExpired())
+        {
+            task.setCompleted(false);
+            taskLog.set(task.getName(), task);
+            tasks.delete(body.completeTaskName);
+            console.log("task expired");
+        }
+        else{
+            task.setCompleted(true);
+            taskLog.set(task.getName(), task);
+            tasks.delete(body.completeTaskName);
+            console.log("task completed");
+        }
+        
+    }
+    else
+    {
+        console.log("tasks does not exsist");
+    }
+    ctx.redirect('/');
+}
 
 //test route
 router.get('/test',ctx => (ctx.body = 'hello test'));

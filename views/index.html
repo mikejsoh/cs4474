@@ -34,12 +34,16 @@
         <div name = "<%= value.getName();%>">
             <div class="row">
                 <div class="column column-25"><h3>Task Name: <%=key %><h3></div>
+
                 <div class="column column-25 clearfix"><button class="button float-right" onclick="editTask(this)">Edit</button></div>
-                <div class="column column-25 clearfix"><button class="button float-right" onclick= "completeTask(this)">Complete</button></div>
+
+                <div class="column colum-25 clearfix"><form action="/complete" method="post"><button class="button float-right">Complete</button>
+                <input type="text" value="<%= value.getName();%>" name="completeTaskName" hidden>
+                </form></div>
+
                 <div class="column colum-25 clearfix"><form action="/delete" method="post"><button class="button float-right">Delete</button>
                 <input type="text" value="<%= value.getName();%>" name="deleteTaskName" hidden>
-                </form>
-                </div>
+                </form></div>
             </div>
             <div class="row" id="editArea">
                 <p>Edit Content</p>
