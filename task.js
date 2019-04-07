@@ -1,23 +1,36 @@
+var {DateTime} = require('luxon');
+
 class Task {
 
-    constructor(description, exp, reward, dueDate, repeat)
+    constructor(name, description, exp, reward, dueDate, repeat)
     {
+        let _name = name;//string key for map
+        let _description = description;//string
+        let _exp = exp;//int 
+        let _reward = reward;// reward object
+        let _dueDate = DateTime.fromISO(dueDate); //luxon datetime object or null otherwise
+        let _repeat = repeat; //array of bool representing the days of the week or null if no repeat
+        let _completed = null;//true if completed , false if expired, null if in progress
 
-        let _description = description;
-        let _exp = exp;
-        let _reward = reward;
-        let _dueDate = dueDate;
-        let _repeat = repeat;
-
-        this.complete = function(){
-            //function for when user completes the task
-        }
-
+       
         this.isExpired = function(){
             //function to check expiry of tasks
+            let now = DateTime.local();
+            if(_dueDate <= now)
+            {return true;}
+            else
+            {return false}
         } 
 
         //setters
+        this.setName = function(newName)
+        {
+            _name = newName;
+        }
+        this.setCompleted = function(newCompleted)
+        {
+            _completed = newCompleted;
+        }
         this.setDescription = function(newDescription){
             _reward = newDescription;
         }
@@ -31,7 +44,7 @@ class Task {
         }
 
         this.setDueDate = function(newDueDate){
-            _dueDate = newDueDate;
+            _dueDate = DateTime.fromISO(newDueDate);
         }
 
         this.setRepeat = function(newRepeat){
@@ -40,6 +53,14 @@ class Task {
 
         
         //getters
+        this.getName = function()
+        {
+            return _name;
+        }
+        this.getCompleted = function()
+        {
+            return _completed;
+        }
         this.getDescription = function(){
             return _description;
         }

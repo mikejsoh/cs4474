@@ -6,19 +6,35 @@
       </div>
     </div>
     
-    <div class="row">
-         <form action="/" class="row" method="POST" >
-            <input type="text"  class="column" placeholder="Task Name" id="nameField" name="task">
-            <input type="submit" class="column button" value="Add">
-        </form>
+    <div >
+        <form action="/" method="POST" class= "row">
+           <input type="text"  class="column" placeholder="Task Name" name="taskName" required>
+           <div class="column" required>
+                <input type="radio" name="exp" value="5" checked>5 exp<br>
+                <input type="radio" name="exp" value="10">10 exp<br>
+                <input type="radio" name="exp" value="15">15 exp<br>
+                <input type="radio" name="exp" value="20">20 exp<br>
+           </div>
+           <input type="text"  class="column" placeholder="Description" name="description">
+           <input type="text"  class="column" placeholder="Reward" name="reward"
+           >
+           <input type="date" class="column" name="dueDate" required>
+       
+           <input type="submit" class="column button" value="Add">
+       </form>
     </div>
 
-    <% tasks.forEach(task => { %>
-        <div class="column">
-            <%= task%>
+    
+    <% tasks.forEach((value, key) => { %>
+        <div class="column text-center">
+            <%= key %>
+            <%= value.getDescription()%>
+            <%= value.getExp()%>
+            <%= value.getReward()%>
+            <%= value.getDueDate().toLocaleString({month: 'long', day: 'numeric', year: 'numeric'})%>
+            <%= value.getRepeat()%>
         </div>
     <% }); %>
-
    
  
 </div>
