@@ -1,7 +1,6 @@
 <h1><%- title %></h1>
 
 <!-- Start of Unearned Reward List -->
-<% if (unearnedRewards.length > 0) { %>
 <div class="card shadow-sm">
     <h5 class="card-header card-header-bg-dark mb-3">Pending Rewards</h5>
     <% unearnedRewards.forEach( function(unearnedReward) { %>
@@ -13,11 +12,9 @@
         </div>
     <% }); %>
 </div>
-<% } %>
 <!-- End of Unearned Reward List -->
 
 <!-- Start of Earned Reward List -->
-<% if (earnedRewards.length > 0) { %>
 <div class="card shadow-sm mt-5">
     <h5 class="card-header card-header-bg-dark mb-3">Earned Rewards</h5>
     <% earnedRewards.forEach( function(earnedReward) { %>
@@ -39,11 +36,9 @@
         </div>
     <% }); %>
 </div>
-<% } %>
 <!-- End of Earned Reward List -->
 
 <!-- Start of Claimed Reward List -->
-<% if (claimedRewards.length > 0) { %>
 <div class="card shadow-sm mt-5">
     <h5 class="card-header card-header-bg-dark mb-3">Claimed Rewards</h5>
     <% claimedRewards.forEach( function(claimedReward) { %>
@@ -55,5 +50,4 @@
         </div>
     <% }); %>
 </div>
-<% } %>
 <!-- End of Claimed Reward List -->
