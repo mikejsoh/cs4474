@@ -136,6 +136,7 @@ async function index(ctx){
     await ctx.render('index', {
         title: "Tasks",
         userCreated: charCreated,
+        character: subject.Character,
         incompleteTasks: subject.IncompleteTasks,
         todayTasks: todayTasks,
         nextThreeDaysTasks: nextThreeDaysTasks,
@@ -351,6 +352,7 @@ async function showChar(ctx){
     
     await ctx.render('char', {
         title: "Character",
+        character: subject.Character,
         completedTasks: subject.CompleteTasks,
         claimedRewards: subject.ClaimedRewards,
         missedTasks: subject.FailedTasks
@@ -364,6 +366,7 @@ async function showReward(ctx) {
 
     await ctx.render('reward', {
         title: "Rewards",
+        character: subject.Character,
         unearnedRewards: subject.UnearnedRewards,
         earnedRewards: subject.EarnedRewards,
         claimedRewards: subject.ClaimedRewards
