@@ -60,14 +60,14 @@ async function index(ctx) {
     tasks.forEach((value, key) =>{
         if(value.isExpired())
         {
-            //console.log(key + "expired")
+            console.log(key + "expired")
             value.setCompleted(false);
             taskLog.set(key, value);
             tasks.delete(key);
         }
         else
         {
-            //console.log(key + "not expired")
+            console.log(key + "not expired")
         }
     })    
     await ctx.render('index', {
@@ -110,7 +110,6 @@ async function updateTask(ctx){
         task.setExp(body.editExp);
         task.setReward(body.editReward);
         task.setDueDate(body.editDueDate);
-        tasks.set(body.editTaskName, task);
     }
     ctx.redirect('/');
 }

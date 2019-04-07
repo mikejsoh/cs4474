@@ -32,7 +32,7 @@ class Task {
             _completed = newCompleted;
         }
         this.setDescription = function(newDescription){
-            _reward = newDescription;
+            _description = newDescription;
         }
         
         this.setExp = function(newExp){
@@ -48,7 +48,7 @@ class Task {
         }
 
         this.setRepeat = function(newRepeat){
-            _reward = newRepeat;
+            _repeat = newRepeat;
         }
 
         
