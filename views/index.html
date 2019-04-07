@@ -31,47 +31,48 @@
     </div>
 
     <% tasks.forEach((value, key) => { %>
-        <div class="row">
-            <div class="column column-50"><h3>Task Name: <%=key %><h3></div>
-            <div class="column column-25 clearfix"><button class="button float-right" onclick="editTask()">Edit</button></div>
-            <div class="column column-25 clearfix"><button class="button float-right" onclick= "completeTask()">Complete</button></div>
-        </div>
-        <div class="row" id="editArea">
+        <div id = "<%= value.getName();%>">
+            <div class="row">
+                <div class="column column-50"><h3>Task Name: <%=key %><h3></div>
+                <div class="column column-25 clearfix"><button class="button float-right" onclick="editTask(this)">Edit</button></div>
+                <div class="column column-25 clearfix"><button class="button float-right" onclick= "completeTask(this)">Complete</button></div>
+            </div>
+            <div class="row" id="editArea">
                 <p>Edit Content</p>
                 <form action="/" method="POST" class= "row">
-                    <div class="column"><input type="text"  value="<%= value.getName();%>" name="editTaskName" required></div>
-
-                    <div class="column" >
-                       <div class="row">
-                            <input type="radio" name="editExp" id = "edit5" value="5">5 exp<br>
-                            <input type="radio" name="editExp" id = "edit10" value="10">10 exp<br>
-                       </div>
-                       <div class="row">
-                            <input type="radio" name="editExp" id = "edit15" value="15">15 exp<br>
-                            <input type="radio" name="editExp" id = "edit20" value="20">20 exp<br>
-                       </div>
+                <div class="column"><input type="text"  value="<%= value.getName();%>" name="editTaskName" required></div>
+            
+                <div class="column" >
+                    <div class="row">
+                        <input type="radio" name="editExp" id = "edit5" value="5">5 exp<br>
+                        <input type="radio" name="editExp" id = "edit10" value="10">10 exp<br>
                     </div>
-
-                    <div class="column"><input type="text" value="<%= value.getDescription();%>" name="editDescription"></div>
-                    <div class="column"><input type="text"   value="<%= value.getReward();%>" name="editReward"
-                    ></div>
-                    <div class="column"><input type="date" value="<%= value.getDueDate().toISODate();%>" name="editDueDate" required></div>
-                    <div class="column"><input type="submit" class="column button" value="Submit"></div>
-               </form>
+                    <div class="row">
+                        <input type="radio" name="editExp" id = "edit15" value="15">15 exp<br>
+                        <input type="radio" name="editExp" id = "edit20" value="20">20 exp<br>
+                    </div>
+                </div>
+            
+                <div class="column"><input type="text" value="<%= value.getDescription();%>" name="editDescription"></div>
+                <div class="column"><input type="text"   value="<%= value.getReward();%>" name="editReward"></div>
+                <div class="column"><input type="date" value="<%= value.getDueDate().toISODate();%>" name="editDueDate" required></div>
+                <div class="column"><input type="submit" class="column button" value="Submit"></div>
+                </form>
+            </div>
         </div>
     <% }); %>
     
 
     <script>
-        function editTask(editArea){
-            if(document.getElementById("editArea").style.display !== 'none')
-            {document.getElementById("editArea").style.display = 'none';}
+        function editTask(elem){
+            elem = elem.parentElement.parentElement.nextElementSibling;
+            console.log(elem);
+            if(elem.style.display === "")
+            {elem.style.display = "block"}
             else
-            {
-                document.getElementById("editArea").style.display = 'block';
-            }
+            {elem.style.display = "none"}
         }
-        function completeTask(){
+        function completeTask(elem){
           console.log("I am in the click handler 2!"); 
         }
     </script>
