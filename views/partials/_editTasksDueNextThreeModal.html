@@ -1,4 +1,5 @@
-<div class="modal fade" id="editTaskModal<%= nextThreeDaysTask.TaskID %>" tabindex="-1" role="dialog" aria-labelledby="editTaskModal" aria-hidden="true">
+<div class="modal fade" id="editTaskModal<%= nextThreeDaysTask.TaskID %>" tabindex="-1" role="dialog"
+    aria-labelledby="editTaskModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,46 +12,48 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="TaskTitle">Task Title</label>
-                        <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
+                        <input type="text" class="form-control" name="taskTitle" id="TaskTitle" value="<%= nextThreeDaysTask.TaskTitle %>">
                     </div>
                     <div class="form-group">
                         <label for="TaskDescription">Task Description</label>
-                        <textarea class="form-control" id="TaskDescription" name="taskDescription"
-                            rows="3"></textarea>
+                        <textarea class="form-control" id="TaskDescription" name="taskDescription" rows="3"><%= nextThreeDaysTask.TaskDescription %></textarea>
                     </div>
                     <div class="form-group">
                         <label for="TaskEXP">Task EXP Amount</label>
-                        <select class="form-control" id="exampleFormControlSelect1" name="taskEXP">
-                          <option>10</option>
-                          <option>20</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
+                        <select class="form-control" id="expSelect<%= nextThreeDaysTask.TaskID %>" name="taskEXP">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="Reward">Reward Title</label>
-                        <input type="text" class="form-control" name="taskRewardTitle" id="reward">
+                        <input type="text" class="form-control" name="taskRewardTitle" id="reward" value="<%= nextThreeDaysTask.TaskRewardTitle %>">
                     </div>
                     <div class="form-group">
                         <label for="RewardDescription">Reward Description</label>
-                        <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"></textarea>
+                        <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"><%= nextThreeDaysTask.TaskRewardDescription %></textarea>
                     </div>
                     <div class="container">
                         <div class="row">
                             <div class="form-group">
                                 <label for="TaskDueDate">Due Date</label>
-                                <div class="input-group date" id="datetimepicker4editThree" data-target-input="nearest">
-                                    <input type="text" name="taskDueDate" class="form-control datetimepicker-input" data-target="#datetimepicker4editThree"/>
-                                    <div class="input-group-append" data-target="#datetimepicker4editThree" data-toggle="datetimepicker">
+                                <div class="input-group date" id="datetimepicker<%= nextThreeDaysTask.TaskID %>" data-target-input="nearest">
+                                    <input type="text" name="taskDueDate" class="form-control datetimepicker-input"
+                                        data-target="#datetimepicker<%= nextThreeDaysTask.TaskID %>" />
+                                    <div class="input-group-append" data-target="#datetimepicker<%= nextThreeDaysTask.TaskID %>"
+                                        data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <script type="text/javascript">
                                 $(function () {
-                                    $('#datetimepicker4editThree').datetimepicker({
-                                        format: 'L'
+                                    $('#datetimepicker<%= nextThreeDaysTask.TaskID %>').datetimepicker({
+                                        format: 'L',
+                                        defaultDate: "<%= nextThreeDaysTask.TaskDueDate %>"
                                     });
                                 });
                             </script>
@@ -65,3 +68,16 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    jQuery(function() {
+        var expSelectValue = "<%= nextThreeDaysTask.TaskEXP %>"
+        var expSelectInput = document.getElementById('expSelect<%= nextThreeDaysTask.TaskID %>');
+        console.log(expSelectValue);
+        for (var i, j = 0; i = expSelectInput.options[j]; j++) {
+            if (i.value == expSelectValue) {
+                expSelectInput.selectedIndex = j;
+            }
+        }
+    });
+</script>

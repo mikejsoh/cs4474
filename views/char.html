@@ -1,11 +1,17 @@
-<h1><%- title %></h1>
+<div>
+	<h1 class="d-inline-block align-middle"><%- title %></h1>
+	
+	<!-- Reset Button -->
+	<button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#resetModal">Delete All Data</button>
+</div>
+
 <div class="row">
 	<div class="col-12">
 		<div class="card shadow-sm">
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-4">
-						Character Image
+						<img src="/images/<%- character.Image %>" />
 					</div>
 					<div class="col-sm-8">
 						<h3><%- character.Name %></h3>
@@ -87,4 +93,26 @@
 		</div>
 	</div>
 
+	
+<!-- Reset Modal -->
+<div id="resetModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+
+				<h4 class="modal-title">Warning</h4>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to reset all tasks, rewards, and character progress? This action cannot be reversed.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<a href="/reset" class="btn btn-danger btn-lg">Reset Everything</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End of Reset Modal -->
 </div>

@@ -7,6 +7,27 @@
 </script>
 <% } %>
 
+<script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+              form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+              }, false);
+            });
+          }, false);
+        })();
+</script>
+
 <!-- User Creation Modal -->
 <div id="userCreationModal" class="modal show" role="dialog">
     <div class="modal-dialog">
@@ -16,11 +37,11 @@
                 <h4 class="modal-title">Welcome</h4>
             </div>
                 <!-- Start of Form -->
-                <form action="/charCreate" method="POST">
+                <form class="needs-validation" action="/charCreate" method="POST">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="TaskTitle">Please enter your name</label>
-                            <input type="text" class="form-control" name="charName" id="CharName">
+                            <input type="text" class="form-control"  name="charName" id="CharName" required>
                         </div>
                     </div>
 
@@ -32,38 +53,6 @@
         </div>
     </div>
 </div>
-
-
-<!-- Example
-<% if (userCreated === 'true') { %>
-   <script src="activateModal.js"></script>
-<% } %>
--->
-
-<!-- Reset Button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#resetModal">Reset Tasks and Rewards</button>
-
-<!-- Reset Modal -->
-<div id="resetModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <h4 class="modal-title">Warning</h4>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to reset all tasks, rewards, and character progress? This action cannot be reversed.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="/reset" class="btn btn-danger btn-lg">Reset Everything</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <div>
     <h1 class="d-inline-block align-middle">Tasks</h1>
@@ -86,11 +75,11 @@
                 </button>
             </div>
             <!-- Start of Form -->
-            <form action="/" method="POST">
+            <form class="needs-validation" action="/" method="POST">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="TaskTitle">Task Title</label>
-                        <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
+                        <input type="text" class="form-control" name="taskTitle" id="TaskTitle" required>
                     </div>
                     <div class="form-group">
                         <label for="TaskDescription">Task Description</label>
@@ -108,7 +97,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Reward">Reward Title</label>
-                        <input type="text" class="form-control" name="taskRewardTitle" id="reward">
+                        <input type="text" class="form-control" name="taskRewardTitle" id="reward" required>
                     </div>
                     <div class="form-group">
                         <label for="RewardDescription">Reward Description</label>
@@ -119,7 +108,7 @@
                             <div class="form-group">
                                 <label for="TaskDueDate">Due Date</label>
                                 <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                                    <input type="text" name="taskDueDate" class="form-control datetimepicker-input" data-target="#datetimepicker4"/>
+                                    <input type="text" name="taskDueDate" class="form-control datetimepicker-input" data-target="#datetimepicker4" required/>
                                     <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>

@@ -70,6 +70,15 @@
                 </a>
             </li>
 
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/faq">
+                    <i class="fas fa-question-circle"></i>
+                    <span>FAQ</span>
+                </a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -92,6 +101,9 @@
                     <div class="row d-flex align-items-center">
                         <div class="col-2">
                             <b class=""><%- character.Name %></b>
+                        </div>
+                        <div class="col-1 pl-2 pr-0">
+                            Level: <%- character.Level %>
                         </div>
                         <i class="fas fa-heart d-inline"></i>
                         <div class="col-2 pl-2 pr-1">
