@@ -7,6 +7,9 @@
     margin-bottom: 60px; /* Margin bottom by footer height
 }*/
 
+/* Fixes Tooltip centering issue */
+.tooltip { top: 0; }
+
 .list-group-item, .list-group-item:hover {
     z-index: auto
 }

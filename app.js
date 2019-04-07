@@ -191,7 +191,7 @@ async function addTask(ctx) {
     taskObj["TaskID"] = postTaskID;
     taskObj["TaskTitle"] = postTaskTitle;
     taskObj["TaskDescription"] = postTaskDescription;
-    taskObj["TaskEXP"] = postTaskEXP;
+    taskObj["TaskEXP"] = parseInt(postTaskEXP, 10);
     taskObj["TaskRewardTitle"] = postTaskRewardTitle;
     taskObj["TaskRewardDescription"] = postTaskRewardDescription;
     taskObj["TaskDueDate"] = postTaskDueDate;
@@ -250,9 +250,9 @@ async function updateTask(ctx) {
         if (incompleteTasks[i].TaskID == task_id) {
             incompleteTasks[i].TaskTitle = body.taskTitle;
             incompleteTasks[i].TaskDescription = body.taskDescription;
-            incompleteTasks[i].TaskEXP = body.taskEXP
-            incompleteTasks[i].TaskRewardTitle = body.taskRewardTitle
-            incompleteTasks[i].TaskRewardDescription = body.taskRewardDescription
+            incompleteTasks[i].TaskEXP = parseInt(postTaskEXP, 10);
+            incompleteTasks[i].TaskRewardTitle = body.taskRewardTitle;
+            incompleteTasks[i].TaskRewardDescription = body.taskRewardDescription;
             //incompleteTasks[i].TaskDueDate = body.taskDueDate;
             
             //Manipulate Date so that it fits the TaskExpiry Function
@@ -333,10 +333,10 @@ async function claimTask(ctx) {
     subject.Character["EXP"] = subject.Character["EXP"] + task["TaskEXP"];
     
     //Check if Leveled UP; if leveled up change EXP and HP
-    if (subject.Character["EXP"] >= (10 + 20 * subject.Character["Level"])) {
+    if (subject.Character["EXP"] >= (10 + 20 * (subject.Character["Level"] - 1))) {
         subject.Character["Level"] += 1;
         subject.Character["EXP"] = 0;
-        subject.Character["HP"] = 100 - (10 * subject.Character["Level"]);
+        subject.Character["HP"] = 100 - (10 * (subject.Character["Level"] - 1));
         subject.Character["Image"] = "level" + subject.Character["Level"] + ".png";
     }
 

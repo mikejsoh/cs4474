@@ -94,18 +94,24 @@
                             <b class=""><%- character.Name %></b>
                         </div>
                         <i class="fas fa-heart d-inline"></i>
-                        <div class="col-2">
-                            <div class="progress w-75 align-middle">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: <%= character.HP %>%"
+                        <div class="col-2 pl-2 pr-1">
+                            <div class="progress align-middle">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: <%= character.HP / (100 - 10 * (character.Level - 1)) * 100 %>%"
                                     aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
-                        EXP:
-                        <div class="col-2">
-                            <div class="progress w-75 align-middle">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: <%= character.EXP %>%"
+                        <div class="col-1 pl-0">
+                            <%= character.HP %>/<%= 100 - 10 * (character.Level - 1) %>
+                        </div>
+                        EXP: <%=  %>
+                        <div class="col-2 pl-2 pr-1">
+                            <div class="progress align-middle">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: <%= character.EXP / (10 + 20 * (character.Level - 1)) * 100 %>%"
                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
+                        </div>
+                        <div class="col-1 pl-0">
+                            <%= character.EXP %>/<%= 10 + 20 * (character.Level - 1) %>
                         </div>
 
                     </div>
