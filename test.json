@@ -2,12 +2,30 @@
     "IncompleteTasks": [
         {
             "TaskID": 1,
-            "TaskTitle": "a",
-            "TaskDescription": "A",
-            "TaskEXP": "50",
-            "TaskRewardTitle": "A",
-            "TaskRewardDescription": "A",
-            "TaskDueDate": "2019/05/01"
+            "TaskTitle": "2",
+            "TaskDescription": "2",
+            "TaskEXP": "10",
+            "TaskRewardTitle": "2",
+            "TaskRewardDescription": "2",
+            "TaskDueDate": "2019/04/07"
+        },
+        {
+            "TaskID": 2,
+            "TaskTitle": "1",
+            "TaskDescription": "1",
+            "TaskEXP": "10",
+            "TaskRewardTitle": "1",
+            "TaskRewardDescription": "1",
+            "TaskDueDate": "2019/04/06"
+        },
+        {
+            "TaskID": 3,
+            "TaskTitle": "3",
+            "TaskDescription": "3",
+            "TaskEXP": "10",
+            "TaskRewardTitle": "3",
+            "TaskRewardDescription": "3",
+            "TaskDueDate": "2019/04/10"
         }
     ],
     "CompleteTasks": [],
@@ -15,21 +33,25 @@
     "UnearnedRewards": [
         {
             "RewardID": 1,
-            "RewardTitle": "A",
-            "RewardDescription": "A"
+            "RewardTitle": "2",
+            "RewardDescription": "2"
+        },
+        {
+            "RewardID": 2,
+            "RewardTitle": "1",
+            "RewardDescription": "1"
+        },
+        {
+            "RewardID": 3,
+            "RewardTitle": "3",
+            "RewardDescription": "3"
         }
     ],
     "EarnedRewards": [],
     "ClaimedRewards": [],
     "FailedRewards": [],
-    "Character": {
-        "Name": "Aaron",
-        "HP": 100,
-        "EXP": 0,
-        "Level": 1,
-        "Image": "level1.png"
-    },
+    "Character": {},
     "TaskNumber": 0,
-    "TaskIDCounter": 1,
-    "RewardIDCounter": 1
+    "TaskIDCounter": 3,
+    "RewardIDCounter": 3
 }

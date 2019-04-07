@@ -101,7 +101,7 @@ async function index(ctx){
     //Check if a Character object is empty
     if (Object.entries(subject.Character).length === 0 && subject.Character.constructor === Object) {
         charCreated = false;}
-    
+   
     //Checking if any tasks have expired
     var taskExpiredBoolInitial = TaskExpiredCheck();
     if (taskExpiredBoolInitial === true) {
@@ -179,6 +179,11 @@ async function addTask(ctx) {
    
     let postRewardID = subject.RewardIDCounter + 1;
     subject.RewardIDCounter = postTaskID;         // updates the reward id counter
+    
+    //Manipulate Date so that it fits the TaskExpiry Function
+    var dateArr = body.taskDueDate.split("/");
+    var newDateArr = [ dateArr[2], dateArr[0], dateArr[1] ];
+    postTaskDueDate = newDateArr.join("/");
    
     //Creating JSON object that is being appended into local JSON object
     var taskObj = {};
@@ -247,7 +252,14 @@ async function updateTask(ctx) {
             incompleteTasks[i].TaskEXP = body.taskEXP
             incompleteTasks[i].TaskRewardTitle = body.taskRewardTitle
             incompleteTasks[i].TaskRewardDescription = body.taskRewardDescription
-            incompleteTasks[i].TaskDueDate = body.taskDueDate;
+            //incompleteTasks[i].TaskDueDate = body.taskDueDate;
+            
+            //Manipulate Date so that it fits the TaskExpiry Function
+            var dateArr = body.taskDueDate.split("/");
+            var newDateArr = [ dateArr[2], dateArr[0], dateArr[1] ];
+            var postTaskDueDate = newDateArr.join("/");
+
+            incompleteTasks[i].TaskDueDate = postTaskDueDate;
         }
     }
 
@@ -324,6 +336,7 @@ async function claimTask(ctx) {
         subject.Character["Level"] += 1;
         subject.Character["EXP"] = 0;
         subject.Character["HP"] = 100 - (10 * subject.Character["Level"]);
+        subject.Character["Image"] = "level" + subject.Character["Level"] + ".png";
     }
 
     let newSubject = JSON.stringify(subject, null, 4);

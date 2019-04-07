@@ -8,35 +8,53 @@
                 </button>
             </div>
             <form action="/task/<%= todayTask.TaskID %>" method="POST">
-                <div class="modal-body">
+                 <div class="modal-body">
                     <div class="form-group">
                         <label for="TaskTitle">Task Title</label>
-                        <input type="text" class="form-control" name="taskTitle" id="TaskTitle"
-                            value="<%= todayTask.TaskTitle %>">
+                        <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
                     </div>
                     <div class="form-group">
                         <label for="TaskDescription">Task Description</label>
                         <textarea class="form-control" id="TaskDescription" name="taskDescription"
-                            rows="3"><%= todayTask.TaskDescription %></textarea>
+                            rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="EXP">EXP</label>
-                        <input type="text" class="form-control" name="taskEXP" id="exp" value="<%= todayTask.TaskEXP %>">
+                        <label for="TaskEXP">Task EXP Amount</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="taskEXP">
+                          <option>10</option>
+                          <option>20</option>
+                          <option>30</option>
+                          <option>40</option>
+                          <option>50</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="Reward">Reward Title</label>
-                        <input type="text" class="form-control" name="taskRewardTitle" id="reward"
-                            value="<%= todayTask.TaskRewardTitle %>">
+                        <input type="text" class="form-control" name="taskRewardTitle" id="reward">
                     </div>
                     <div class="form-group">
                         <label for="RewardDescription">Reward Description</label>
-                        <textarea class="form-control" id="RewardDescription" name="taskRewardDescription"
-                            rows="3"><%= todayTask.TaskRewardDescription %></textarea>
+                        <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="DueDate">Due Date</label>
-                        <input type="text" class="form-control" id="TaskDueDate" name="taskDueDate"
-                            value="<%= todayTask.TaskDueDate %>">
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="TaskDueDate">Due Date</label>
+                                <div class="input-group date" id="datetimepicker4editToday" data-target-input="nearest">
+                                    <input type="text" name="taskDueDate" class="form-control datetimepicker-input" data-target="#datetimepicker4editToday"/>
+                                    <div class="input-group-append" data-target="#datetimepicker4editToday" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker4editToday').datetimepicker({
+                                        format: 'L'
+                                    });
+                                });
+                            </script>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

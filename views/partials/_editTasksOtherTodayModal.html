@@ -11,32 +11,50 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="TaskTitle">Task Title</label>
-                        <input type="text" class="form-control" name="taskTitle" id="TaskTitle"
-                            value="<%= allOtherTask.TaskTitle %>">
+                        <input type="text" class="form-control" name="taskTitle" id="TaskTitle">
                     </div>
                     <div class="form-group">
                         <label for="TaskDescription">Task Description</label>
                         <textarea class="form-control" id="TaskDescription" name="taskDescription"
-                            rows="3"><%= allOtherTask.TaskDescription %></textarea>
+                            rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="EXP">EXP</label>
-                        <input type="text" class="form-control" name="taskEXP" id="exp" value="<%= allOtherTask.TaskEXP %>">
+                        <label for="TaskEXP">Task EXP Amount</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="taskEXP">
+                          <option>10</option>
+                          <option>20</option>
+                          <option>30</option>
+                          <option>40</option>
+                          <option>50</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="Reward">Reward Title</label>
-                        <input type="text" class="form-control" name="taskRewardTitle" id="reward"
-                            value="<%= allOtherTask.TaskRewardTitle %>">
+                        <input type="text" class="form-control" name="taskRewardTitle" id="reward">
                     </div>
                     <div class="form-group">
                         <label for="RewardDescription">Reward Description</label>
-                        <textarea class="form-control" id="RewardDescription" name="taskRewardDescription"
-                            rows="3"><%= allOtherTask.TaskRewardDescription %></textarea>
+                        <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="DueDate">Due Date</label>
-                        <input type="text" class="form-control" id="TaskDueDate" name="taskDueDate"
-                            value="<%= allOtherTask.TaskDueDate %>">
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="TaskDueDate">Due Date</label>
+                                <div class="input-group date" id="datetimepicker4editOtherToday" data-target-input="nearest">
+                                    <input type="text" name="taskDueDate" class="form-control datetimepicker-input" data-target="#datetimepicker4editOtherToday"/>
+                                    <div class="input-group-append" data-target="#datetimepicker4editOtherToday" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker4editOtherToday').datetimepicker({
+                                        format: 'L'
+                                    });
+                                });
+                            </script>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
