@@ -7,10 +7,6 @@
 </script>
 <% } %>
 
-<!-- Replacing text with EJS
-<h1><%- title %></h1>
--->
-
 <!-- User Creation Modal -->
 <div id="userCreationModal" class="modal show" role="dialog">
     <div class="modal-dialog">
@@ -101,8 +97,14 @@
                         <textarea class="form-control" id="TaskDescription" name="taskDescription" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="EXP">EXP</label>
-                        <input type="text" class="form-control" name="taskEXP" id="exp">
+                        <label for="TaskEXP">Task EXP Amount</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="taskEXP">
+                          <option>10</option>
+                          <option>20</option>
+                          <option>30</option>
+                          <option>40</option>
+                          <option>50</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="Reward">Reward Title</label>
@@ -112,9 +114,25 @@
                         <label for="RewardDescription">Reward Description</label>
                         <textarea class="form-control" id="RewardDescription" name="taskRewardDescription" rows="3"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="DueDate">Due Date</label>
-                        <input type="text" class="form-control" id="TaskDueDate" name="taskDueDate">
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="TaskDueDate">Due Date</label>
+                                <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                                    <input type="text" name="taskDueDate" class="form-control datetimepicker-input" data-target="#datetimepicker4"/>
+                                    <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker4').datetimepicker({
+                                        format: 'L'
+                                    });
+                                });
+                            </script>
+                        </div>
                     </div>
                 </div>
 
