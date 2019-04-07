@@ -6,36 +6,74 @@
       </div>
     </div>
     
-    <div >
+    <div class="row">
         <form action="/" method="POST" class= "row">
-           <input type="text"  class="column" placeholder="Task Name" name="taskName" required>
-           <div class="column" required>
-                <input type="radio" name="exp" value="5" checked>5 exp<br>
-                <input type="radio" name="exp" value="10">10 exp<br>
-                <input type="radio" name="exp" value="15">15 exp<br>
-                <input type="radio" name="exp" value="20">20 exp<br>
+            <div class="column"><input type="text"  placeholder="Task Name" name="taskName" required></div>
+           
+           <div class="column" >
+               <div class="row">
+                    <input type="radio" name="exp" value="5" checked>5 exp<br>
+                    <input type="radio" name="exp" value="10">10 exp<br>
+               </div>
+               <div class="row">
+                    <input type="radio" name="exp" value="15">15 exp<br>
+                    <input type="radio" name="exp" value="20">20 exp<br>
+               </div>
            </div>
-           <input type="text"  class="column" placeholder="Description" name="description">
-           <input type="text"  class="column" placeholder="Reward" name="reward"
-           >
-           <input type="date" class="column" name="dueDate" required>
+           <div class="column"><input type="text" placeholder="Description" name="description"></div>
+           <div class="column"><input type="text"   placeholder="Reward" name="reward"
+            ></div>
+           <div class="column"><input type="date"  name="dueDate" required></div>
+           <div class="column"><input type="submit" class="column button" value="Add"></div>
        
-           <input type="submit" class="column button" value="Add">
+           
        </form>
     </div>
 
-    
     <% tasks.forEach((value, key) => { %>
-        <div class="column text-center">
-            <%= key %>
-            <%= value.getDescription()%>
-            <%= value.getExp()%>
-            <%= value.getReward()%>
-            <%= value.getDueDate().toLocaleString({month: 'long', day: 'numeric', year: 'numeric'})%>
-            <%= value.getRepeat()%>
+        <div class="row">
+            <div class="column column-50"><h3>Task Name: <%=key %><h3></div>
+            <div class="column column-25 clearfix"><button class="button float-right" onclick="editTask()">Edit</button></div>
+            <div class="column column-25 clearfix"><button class="button float-right" onclick= "completeTask()">Complete</button></div>
+        </div>
+        <div class="row" id="editArea">
+                <p>Edit Content</p>
+                <form action="/" method="POST" class= "row">
+                    <div class="column"><input type="text"  value="<%= value.getName();%>" name="editTaskName" required></div>
+
+                    <div class="column" >
+                       <div class="row">
+                            <input type="radio" name="editExp" id = "edit5" value="5">5 exp<br>
+                            <input type="radio" name="editExp" id = "edit10" value="10">10 exp<br>
+                       </div>
+                       <div class="row">
+                            <input type="radio" name="editExp" id = "edit15" value="15">15 exp<br>
+                            <input type="radio" name="editExp" id = "edit20" value="20">20 exp<br>
+                       </div>
+                    </div>
+
+                    <div class="column"><input type="text" value="<%= value.getDescription();%>" name="editDescription"></div>
+                    <div class="column"><input type="text"   value="<%= value.getReward();%>" name="editReward"
+                    ></div>
+                    <div class="column"><input type="date" value="<%= value.getDueDate().toISODate();%>" name="editDueDate" required></div>
+                    <div class="column"><input type="submit" class="column button" value="Submit"></div>
+               </form>
         </div>
     <% }); %>
-   
- 
+    
+
+    <script>
+        function editTask(editArea){
+            if(document.getElementById("editArea").style.display !== 'none')
+            {document.getElementById("editArea").style.display = 'none';}
+            else
+            {
+                document.getElementById("editArea").style.display = 'block';
+            }
+        }
+        function completeTask(){
+          console.log("I am in the click handler 2!"); 
+        }
+    </script>
 </div>
   
