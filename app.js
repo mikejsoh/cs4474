@@ -30,6 +30,7 @@ app.use(json());
 app.use(bodyParser());
 app.use(serve('styles'));
 
+
 //simple route
 //app.use(async ctx => ctx.body = ({msg: 'hello karthik'}));
 
@@ -48,7 +49,9 @@ render(app, {
 //Routes
 router.get('/', index);
 router.post('/', addTask);
-router.put('/', updateTask);
+router.post('/edit', updateTask);
+router.post('/delete', deleteTask);
+router.get('/db', ctx => (ctx.body = JSON.stringify(Array.from(tasks))));
 
 //function to render the index page 
 async function index(ctx) {
@@ -56,14 +59,14 @@ async function index(ctx) {
     tasks.forEach((value, key) =>{
         if(value.isExpired())
         {
-            console.log(key + "expired")
+            //console.log(key + "expired")
             value.setCompleted(false);
             taskLog.set(key, value);
             tasks.delete(key);
         }
         else
         {
-            console.log(key + "not expired")
+            //console.log(key + "not expired")
         }
     })    
     await ctx.render('index', {
@@ -90,23 +93,42 @@ async function addTask(ctx) {
     ctx.redirect('/');
 }
 
-//
+//function to update tasks
 async function updateTask(ctx){
     const body = ctx.request.body;
-    if(tasks.has(body.taskName))
+    console.log('Here in update ');
+    if(!tasks.has(body.editTaskName))
     {
-        console.log("task already exsists");       
-    }
-    else if(DateTime.fromISO(body.dueDate) < DateTime.local())
-    {
-        console.log("due date has passed");
+        console.log("task does not exsist");
     }
     else
     {
-        tasks.set(body.taskName, new Task(body.taskName, body.description, body.exp, body.reward, body.dueDate, false));
+        console.log("task exsists");
+        var task = tasks.get(body.editTaskName);
+        task.setDescription(body.editDescription);
+        task.setExp(body.editExp);
+        task.setReward(body.editReward);
+        task.setDueDate(body.editDueDate);
     }
     ctx.redirect('/');
 }
+
+//function to delete tasks
+async function deleteTask(ctx){
+    const body = ctx.request.body;
+    console.log('Here in delete ');
+    if(tasks.has(body.deleteTaskName))
+    {
+        console.log("task exsists");
+        tasks.delete(body.deleteTaskName);
+    }
+    else
+    {
+        console.log("tasks does not exsist");
+    }
+    ctx.redirect('/');
+}
+
 
 //test route
 router.get('/test',ctx => (ctx.body = 'hello test'));

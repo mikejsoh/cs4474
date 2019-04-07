@@ -31,16 +31,20 @@
     </div>
 
     <% tasks.forEach((value, key) => { %>
-        <div id = "<%= value.getName();%>">
+        <div name = "<%= value.getName();%>">
             <div class="row">
-                <div class="column column-50"><h3>Task Name: <%=key %><h3></div>
+                <div class="column column-25"><h3>Task Name: <%=key %><h3></div>
                 <div class="column column-25 clearfix"><button class="button float-right" onclick="editTask(this)">Edit</button></div>
                 <div class="column column-25 clearfix"><button class="button float-right" onclick= "completeTask(this)">Complete</button></div>
+                <div class="column colum-25 clearfix"><form action="/delete" method="post"><button class="button float-right">Delete</button>
+                <input type="text" value="<%= value.getName();%>" name="deleteTaskName" hidden>
+                </form>
+                </div>
             </div>
             <div class="row" id="editArea">
                 <p>Edit Content</p>
-                <form action="/" method="PUT" class= "row">
-                <div class="column"><input type="text"  value="<%= value.getName();%>" name="editTaskName" required></div>
+                <form action="/edit" method="POST" class= "row">
+                <div class="column"><input type="text"  value="<%= value.getName();%>" name="editTaskName" readonly></div>
             
                 <div class="column" >
                     <div class="row">
@@ -66,14 +70,21 @@
     <script>
         function editTask(elem){
             elem = elem.parentElement.parentElement.nextElementSibling;
-            console.log(elem);
             if(elem.style.display === "")
             {elem.style.display = "block"}
-            else
+            else if(elem.style.display === "block")
             {elem.style.display = "none"}
+            else if(elem.style.display === "none")
+            {elem.style.display = "block"}
         }
         function completeTask(elem){
           console.log("I am in the click handler 2!"); 
+        }
+        function deleteTask(elem)
+        {
+            console.log("delte task function")
+            elem = elem.parentElement.parentElement.parentElement;
+            console.log(elem.attributes.name);
         }
     </script>
 </div>

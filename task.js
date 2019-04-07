@@ -44,7 +44,7 @@ class Task {
         }
 
         this.setDueDate = function(newDueDate){
-            _dueDate = DateTime.fromISO(newDueDate);
+            _dueDate = DateTime.fromISO(newDueDate).endOf("day");
         }
 
         this.setRepeat = function(newRepeat){
