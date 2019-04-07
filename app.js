@@ -48,6 +48,7 @@ render(app, {
 //Routes
 router.get('/', index);
 router.post('/', addTask);
+router.put('/', updateTask);
 
 //function to render the index page 
 async function index(ctx) {
@@ -71,7 +72,26 @@ async function index(ctx) {
     });
 }
 
-async function addTask(ctx, next) {
+//function to add tasks
+async function addTask(ctx) {
+    const body = ctx.request.body;
+    if(tasks.has(body.taskName))
+    {
+        console.log("task already exsists");       
+    }
+    else if(DateTime.fromISO(body.dueDate).endOf("day") < DateTime.local())
+    {
+        console.log("due date has passed");
+    }
+    else
+    {
+        tasks.set(body.taskName, new Task(body.taskName, body.description, body.exp, body.reward, body.dueDate, false));
+    }
+    ctx.redirect('/');
+}
+
+//
+async function updateTask(ctx){
     const body = ctx.request.body;
     if(tasks.has(body.taskName))
     {

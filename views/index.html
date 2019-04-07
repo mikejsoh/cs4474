@@ -39,12 +39,12 @@
             </div>
             <div class="row" id="editArea">
                 <p>Edit Content</p>
-                <form action="/" method="POST" class= "row">
+                <form action="/" method="PUT" class= "row">
                 <div class="column"><input type="text"  value="<%= value.getName();%>" name="editTaskName" required></div>
             
                 <div class="column" >
                     <div class="row">
-                        <input type="radio" name="editExp" id = "edit5" value="5">5 exp<br>
+                        <input type="radio" name="editExp" id = "edit5" value="5" checked>5 exp<br>
                         <input type="radio" name="editExp" id = "edit10" value="10">10 exp<br>
                     </div>
                     <div class="row">

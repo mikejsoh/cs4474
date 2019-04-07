@@ -8,7 +8,7 @@ class Task {
         let _description = description;//string
         let _exp = exp;//int 
         let _reward = reward;// reward object
-        let _dueDate = DateTime.fromISO(dueDate); //luxon datetime object or null otherwise
+        let _dueDate = DateTime.fromISO(dueDate).endOf("day"); //luxon datetime object or null otherwise
         let _repeat = repeat; //array of bool representing the days of the week or null if no repeat
         let _completed = null;//true if completed , false if expired, null if in progress
 
@@ -16,10 +16,10 @@ class Task {
         this.isExpired = function(){
             //function to check expiry of tasks
             let now = DateTime.local();
-            if(_dueDate <= now)
-            {return true;}
+            if(_dueDate >= now)
+            {return false;}
             else
-            {return false}
+            {return true;}
         } 
 
         //setters
