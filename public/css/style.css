@@ -125,6 +125,7 @@ body {
     /*color: #858796;*/
     text-align: left;
     background-color: #fff;
+    overflow-y: scroll;
 }
 
 .navbar {
