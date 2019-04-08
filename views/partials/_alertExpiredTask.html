@@ -1,5 +1,5 @@
 <div class="alert alert-danger alert-dismissible fade show" id="alert<%- expiredTaskArray[1].TaskID %>" role="alert">
-    <strong>Your task called <%- expiredTaskArray[1].TaskTitle %> expired</strong> 
+    Task: <%- expiredTaskArray[1].TaskTitle %> failed because the due date has passed. Lost <%- expiredTaskArray[1].TaskEXP %> HP. <a class="alert-link" href="/char">Click Here</a> to view Failed Tasks.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -7,6 +7,6 @@
 
 <script>
 jQuery(document).ready( function() {
-    $('#alert<%- expiredTaskArray[1].TaskID %>').fadeTo(3000,500).slideUp(500);
+    $('#alert<%- expiredTaskArray[1].TaskID %>').fadeTo(5000,500).slideUp(500);
 });
 </script>

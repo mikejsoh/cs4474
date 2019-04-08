@@ -3,6 +3,8 @@
 	
 	<!-- Reset Button -->
 	<button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#resetModal">Delete All Data</button>
+	<button type="button" class="btn btn-dark float-right mx-3" id="showFailedTaskListButton">Show Failed Tasks</button>
+	<button type="button" class="btn btn-dark float-right mx-3" id="hideFailedTaskListButton">Hide Failed Tasks</button>
 </div>
 
 <div class="row">
@@ -92,8 +94,12 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-	
+<!-- Start of Failed Tasks List -->
+<% include partials/_TasksFailedList.html %>
+<!-- End of Failed Tasks List -->
+
 <!-- Reset Modal -->
 <div id="resetModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -115,4 +121,40 @@
 	</div>
 </div>
 <!-- End of Reset Modal -->
-</div>
+
+<script type="text/javascript">
+
+jQuery(document).ready( function() {
+	$(".card .card .card-body .row .col-8 .card-subtitle").each(function() {
+		var expValue = $(this).attr('exp')
+
+		if (expValue == 50) {
+			$(this).parent().parent().parent().parent().addClass("border-red");
+			$(this).parent().parent().parent().addClass("bg-red text-white");
+		} else if (expValue == 40) {
+			$(this).parent().parent().parent().parent().addClass("border-yellow");
+			$(this).parent().parent().parent().addClass("bg-yellow text-white");
+		} else if (expValue == 30) {
+			$(this).parent().parent().parent().parent().addClass("border-blue");
+			$(this).parent().parent().parent().addClass("bg-blue text-white");
+		} else if (expValue == 20) {
+			$(this).parent().parent().parent().parent().addClass("border-green");
+			$(this).parent().parent().parent().addClass("bg-green text-white");
+		} else {
+			$(this).parent().parent().parent().parent().addClass("border-dark");
+			$(this).parent().parent().parent().addClass("bg-dark text-white");
+		}
+	});
+
+	function clickHandler() {
+		$('#showFailedTaskListButton').toggle();
+		$('#hideFailedTaskListButton').toggle();
+		$('#failedTasksList').toggle();
+	}
+
+	$("#showFailedTaskListButton").hide();
+	$("#hideFailedTaskListButton, #showFailedTaskListButton").on('click', clickHandler);
+} );
+
+
+</script>
