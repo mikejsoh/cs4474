@@ -40,22 +40,30 @@ function TaskExpiredCheck() {
     let subject = JSON.parse(rawdata);
     var taskExpired = false;
     
+    /*  expiredTaskArray[0] is taskExpiredBoolean 
+        expiredTaskArray[1] is Task Object  */
+    var expiredTaskArray = new Array(2);
+
     for (var i = 0; i < subject.IncompleteTasks.length; i++) {
+
         var inputTask = subject.IncompleteTasks[i]; 
         var inputString = inputTask["TaskDueDate"];
         var inputArr = inputString.split("/"); //Assume date stored as string "2000/01/20"
         var inputDate = new Date(parseInt(inputArr[2], 10), parseInt(inputArr[0], 10) - 1, parseInt(inputArr[1], 10));
-        
         var reward_description = inputTask["TaskRewardDescription"] //Obtain Task's Reward Description
+
         if (inputDate < now) { //InputDate is in the past
             taskExpired = true;
+            expiredTaskArray[0] = taskExpired;
+            expiredTaskArray[1] = inputTask;
+
             subject.Character["HP"] = subject.Character["HP"] - inputTask["TaskEXP"]; //Take away HP value based on EXP value
             subject.IncompleteTasks.splice(i,1); //remove from incomplete tasks
             subject.FailedTasks.push(inputTask); //push onto failed tasks
             
             const rewardIndex = subject.UnearnedRewards.findIndex(x => x.RewardDescription == reward_description);
             let reward = subject.UnearnedRewards[rewardIndex];
-     
+
             subject.UnearnedRewards.splice(rewardIndex, 1);   //remove from unearned rewards
             subject.FailedRewards.push(reward); //push onto failed rewards
             
@@ -68,7 +76,67 @@ function TaskExpiredCheck() {
     
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject); 
-    return taskExpired;
+    return expiredTaskArray;
+}
+
+function findTodayTasks(incompleteTasks) {
+    // Finds all tasks due today
+    var todayDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+    var todayTasks = incompleteTasks.filter(function (task) {
+        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "MM/DD/YYYY"
+        var taskDate = new Date(parseInt(taskDateArray[2], 10), parseInt(taskDateArray[0], 10) - 1, parseInt(taskDateArray[1], 10));
+        
+        return taskDate.getTime() == todayDate.getTime();
+    });
+    return todayTasks;
+}
+
+function findNextThreeDaysTasks(incompleteTasks) {
+    var todayDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+    var nextThreeDaysTasks = incompleteTasks.filter(function (task) {
+        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "MM/DD/YYYY"
+        var taskDate = new Date(parseInt(taskDateArray[2], 10), parseInt(taskDateArray[0], 10) - 1, parseInt(taskDateArray[1], 10));
+        var next3DaysDate = addDays(todayDate,3);
+
+        return (taskDate.getTime() > todayDate.getTime()) && (taskDate.getTime() <= next3DaysDate);
+    });
+    nextThreeDaysTasks.sort(function(a,b){
+        return new Date(a.TaskDueDate) - new Date(b.TaskDueDate);
+    });
+    return nextThreeDaysTasks;
+}
+
+function findAllOtherTasks(incompleteTasks) {
+    // Finds all other remaining tasks
+    var todayDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+    var allOtherTasks = incompleteTasks.filter(function (task) {
+        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "MM/DD/YYYY"
+        var taskDate = new Date(parseInt(taskDateArray[2], 10), parseInt(taskDateArray[0], 10) - 1, parseInt(taskDateArray[1], 10));
+        var next3DaysDate = addDays(todayDate,3);
+
+        return taskDate.getTime() > next3DaysDate;
+    });
+    
+    allOtherTasks.sort(function(a,b){
+        return new Date(a.TaskDueDate) - new Date(b.TaskDueDate);
+    });
+    return allOtherTasks;
+}
+
+function checkIfLeveledUp(character) {
+    var leveledUpBoolean = false; 
+    if (character["EXP"] >= (10 + 20 * (character["Level"] - 1))) {
+        leveledUpBoolean = true;
+        character["Level"] += 1;
+        character["EXP"] = 0;
+        character["HP"] = 100 - (10 * (character["Level"] - 1));
+        if (character["Level"] <= 5) {
+            character["Image"] = "level" + character["Level"] + ".png";
+        } else {
+            character["Image"] = "level5.png";
+        }
+    }
+    return leveledUpBoolean;
 }
 
 //Route mapping 
@@ -92,7 +160,7 @@ router.post('/task/claim/:id', claimTask);       // Claim Task Method
 router.post('/reward/claim/:id', claimReward);  // Claim Reward Method
 //---------------------------------------------------
 
-	//Show Index.html
+//Show Index.html
 async function index(ctx){
     var rawdata = fs.readFileSync('test.json');
     var subject = JSON.parse(rawdata);
@@ -103,65 +171,53 @@ async function index(ctx){
         charCreated = false;}
    
     //Checking if any tasks have expired
-    var taskExpiredBoolInitial = TaskExpiredCheck();
-    if (taskExpiredBoolInitial === true) {
+    var expiredTaskArray = TaskExpiredCheck();
+    if (expiredTaskArray[0] === true) {
         //Reload the JSON object data after TaskExpiredCheck() has modified it. 
         rawdata = fs.readFileSync('test.json');
         subject = JSON.parse(rawdata);
         
         if (subject.Character["HP"] > 0 ) {//If HP Value greater than 0, can keep playing the game
-            ctx.redirect('/');} //Need to redirect because need to reload/update the subject object after changes 
+            // ctx.redirect('/'); // Need to redirect because need to reload/update the subject object after changes 
+            
+            // Needs to render the whole thing again for the expiredTask Array to persist. The redirect caused the array data to not persist
+            await ctx.render('index', {
+                title: "Tasks",
+                userCreated: charCreated,
+                isLeveledUp: subject.Character["isLeveledUp"],
+                character: subject.Character,
+                incompleteTasks: subject.IncompleteTasks,
+                todayTasks: findTodayTasks(subject.IncompleteTasks),
+                nextThreeDaysTasks: findNextThreeDaysTasks(subject.IncompleteTasks),
+                allOtherTasks: findAllOtherTasks(subject.IncompleteTasks),
+                expiredTaskArray: expiredTaskArray
+            });
+        } 
         else { //If HP Value equal or is less than 0, alert player and do a reset
             ctx.redirect('/gameOver');
         }
     }
     
-
-    // Finds all tasks due today
-    var todayDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
-    var todayTasks = subject.IncompleteTasks.filter(function (task) {
-        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "MM/DD/YYYY"
-        var taskDate = new Date(parseInt(taskDateArray[2], 10), parseInt(taskDateArray[0], 10) - 1, parseInt(taskDateArray[1], 10));
-        
-        return taskDate.getTime() == todayDate.getTime();
-    });
-    
-    // Finds all tasks due in the next 3 days
-    var nextThreeDaysTasks = subject.IncompleteTasks.filter(function (task) {
-        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "MM/DD/YYYY"
-        var taskDate = new Date(parseInt(taskDateArray[2], 10), parseInt(taskDateArray[0], 10) - 1, parseInt(taskDateArray[1], 10));
-        var next3DaysDate = addDays(todayDate,3);
-
-        return (taskDate.getTime() > todayDate.getTime()) && (taskDate.getTime() <= next3DaysDate);
-    });
-
-    nextThreeDaysTasks.sort(function(a,b){
-        return new Date(a.TaskDueDate) - new Date(b.TaskDueDate);
-    });
-
-    // Finds all other remaining tasks
-    var allOtherTasks = subject.IncompleteTasks.filter(function (task) {
-        var taskDateArray = task.TaskDueDate.split("/"); //Assume date stored as string "MM/DD/YYYY"
-        var taskDate = new Date(parseInt(taskDateArray[2], 10), parseInt(taskDateArray[0], 10) - 1, parseInt(taskDateArray[1], 10));
-        var next3DaysDate = addDays(todayDate,3);
-
-        return taskDate.getTime() > next3DaysDate;
-    });
-
-    allOtherTasks.sort(function(a,b){
-        return new Date(a.TaskDueDate) - new Date(b.TaskDueDate);
-    });
-
     // Render index page
     await ctx.render('index', {
         title: "Tasks",
         userCreated: charCreated,
+        isLeveledUp: subject.Character["isLeveledUp"],
         character: subject.Character,
         incompleteTasks: subject.IncompleteTasks,
-        todayTasks: todayTasks,
-        nextThreeDaysTasks: nextThreeDaysTasks,
-        allOtherTasks: allOtherTasks
-    }); 
+        todayTasks: findTodayTasks(subject.IncompleteTasks),
+        nextThreeDaysTasks: findNextThreeDaysTasks(subject.IncompleteTasks),
+        allOtherTasks: findAllOtherTasks(subject.IncompleteTasks),
+        expiredTaskArray: expiredTaskArray
+    });
+
+    // Reset isLeveledUp boolean back to false if true
+    if (subject.Character["isLeveledUp"] == true) {
+        subject.Character["isLeveledUp"] = false;
+        let newSubject = JSON.stringify(subject, null, 4);
+        fs.writeFileSync('test.json', newSubject); 
+    }
+
 };
 
 function addDays(date, days) {
@@ -329,17 +385,7 @@ async function claimTask(ctx) {
     subject.Character["EXP"] = subject.Character["EXP"] + task["TaskEXP"];
     
     //Check if Leveled UP; if leveled up change EXP and HP
-    if (subject.Character["EXP"] >= (10 + 20 * (subject.Character["Level"] - 1))) {
-        subject.Character["Level"] += 1;
-        subject.Character["EXP"] = 0;
-        subject.Character["HP"] = 100 - (10 * (subject.Character["Level"] - 1));
-        if (subject.Character["Level"] <= 5) {
-            subject.Character["Image"] = "level" + subject.Character["Level"] + ".png";
-        } else {
-            subject.Character["Image"] = "level5.png";
-        }
-        
-    }
+    subject.Character["isLeveledUp"] = checkIfLeveledUp(subject.Character);
 
     let newSubject = JSON.stringify(subject, null, 4);
     fs.writeFileSync('test.json', newSubject);
@@ -369,13 +415,17 @@ async function deleteTask(ctx) {
 async function showChar(ctx){
     let rawdata = fs.readFileSync('test.json');
     let subject = JSON.parse(rawdata);
-    
+    var expiredTaskArray = TaskExpiredCheck();
+    var isLeveledUp = subject.Character["isLeveledUp"];
+
     await ctx.render('char', {
         title: "Character",
         character: subject.Character,
+        isLeveledUp: isLeveledUp,
         completedTasks: subject.CompleteTasks,
         claimedRewards: subject.ClaimedRewards,
-        missedTasks: subject.FailedTasks
+        failedTasks: subject.FailedTasks,
+        expiredTaskArray: expiredTaskArray,
     });
 };	
 	
@@ -383,27 +433,35 @@ async function showChar(ctx){
 async function showReward(ctx) {
     let rawdata = fs.readFileSync('test.json');
     let subject = JSON.parse(rawdata);
+    var expiredTaskArray = TaskExpiredCheck();
+    var isLeveledUp = subject.Character["isLeveledUp"];
 
     await ctx.render('reward', {
         title: "Rewards",
         character: subject.Character,
+        isLeveledUp: isLeveledUp,
         unearnedRewards: subject.UnearnedRewards,
         earnedRewards: subject.EarnedRewards,
-        claimedRewards: subject.ClaimedRewards
+        claimedRewards: subject.ClaimedRewards,
+        expiredTaskArray: expiredTaskArray
     });
 };
     //Show GameOver
 async function showGameOver(ctx) {
     let rawdata = fs.readFileSync('test.json');
     let subject = JSON.parse(rawdata);
+    var expiredTaskArray = TaskExpiredCheck();
+    var isLeveledUp = subject.Character["isLeveledUp"];
     
     await ctx.render('gameOver', {
-        character: subject.Character
+        character: subject.Character,
+        isLeveledUp: isLeveledUp,
+        expiredTaskArray: expiredTaskArray
     });
 
 };
 
-    //Reset Everything 
+//Reset Everything 
 async function reset(ctx) {
     
     //Reset all Tasks and Rewards
@@ -427,6 +485,7 @@ async function createChar(ctx) {
     charObj["EXP"] = 0;
     charObj["Level"] = 1;
     charObj["Image"] = "level" + charObj["Level"] + ".png";
+    charObj["isLeveledUp"] = false;
     
     subject.Character = charObj;
     
@@ -440,10 +499,14 @@ async function createChar(ctx) {
 async function showFaq(ctx) {
     let rawdata = fs.readFileSync('test.json');
     let subject = JSON.parse(rawdata);
+    var expiredTaskArray = TaskExpiredCheck();
+    var isLeveledUp = subject.Character["isLeveledUp"];
 
     await ctx.render('faq', {
         title: "FAQ",
-        character: subject.Character
+        character: subject.Character,
+        isLeveledUp: isLeveledUp,
+        expiredTaskArray: expiredTaskArray
     }); 
 }
 

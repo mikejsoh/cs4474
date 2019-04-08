@@ -132,6 +132,12 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <%if (expiredTaskArray[0] == true) { %>
+                        <% include partials/_alertExpiredTask.html %>
+                    <% } %>
+                    <%if (isLeveledUp == true) { %>
+                        <% include partials/_alertLeveledUp.html %>
+                    <% } %>
                     <%- body %>
                 </div>
                 <!-- End Page Content -->

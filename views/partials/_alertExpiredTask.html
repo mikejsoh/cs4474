@@ -1,0 +1,12 @@
+<div class="alert alert-danger alert-dismissible fade show" id="alert<%- expiredTaskArray[1].TaskID %>" role="alert">
+    <strong>Your task called <%- expiredTaskArray[1].TaskTitle %> expired</strong> 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<script>
+jQuery(document).ready( function() {
+    $('#alert<%- expiredTaskArray[1].TaskID %>').fadeTo(3000,500).slideUp(500);
+});
+</script>
